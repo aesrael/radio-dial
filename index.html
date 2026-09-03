@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7adcf">
+  <meta name="description" content="Radio Dial — a tiny direct-stream UK radio player. No accounts, no maze.">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Radio Dial</title>
+  <style>
+    :root { --ink:#282529; --paper:#fffdf9; --pink:#f7adcf; --yellow:#f8d860; --blue:#9fe5ed; --line:#282529; --muted:#766f73; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 5% 8%,#fff 0 12%,transparent 12.4%),var(--paper); font-family:Arial,sans-serif; }
+    button { font:inherit; color:inherit; }
+    .app { width:min(1180px,calc(100% - 32px)); margin:24px auto; min-height:calc(100vh - 48px); display:grid; grid-template-columns:285px 1fr; border:3px solid var(--line); border-radius:28px; overflow:hidden; box-shadow:9px 10px 0 var(--line); background:#fff; }
+    aside { padding:28px 20px; border-right:3px solid var(--line); background:#fffefa; }
+    .logo { display:inline-block; margin:0 0 32px; font:900 48px/0.78 "Arial Rounded MT Bold",Arial,sans-serif; letter-spacing:-4px; transform:rotate(-3deg); color:var(--pink); -webkit-text-stroke:3px var(--line); text-shadow:3px 3px 0 #fff; }
+    .logo small { display:block; margin:8px 0 0 10px; font:700 13px/1 Arial,sans-serif; letter-spacing:3px; color:var(--ink); -webkit-text-stroke:0; }
+    .nav { display:grid; gap:8px; }
+    .nav button { text-align:left; display:flex; align-items:center; gap:15px; padding:13px 15px; border:2px solid transparent; background:transparent; border-radius:15px; cursor:pointer; font-size:19px; }
+    .nav button[aria-current="page"] { background:var(--pink); border-color:var(--line); box-shadow:3px 3px 0 var(--line); }
+    .nav-symbol { width:34px; height:34px; border:3px solid currentColor; border-radius:50%; display:grid; place-items:center; font-size:18px; font-weight:bold; }
+    .tip { margin-top:40px; padding:17px; border:2px solid var(--line); border-radius:17px; background:var(--yellow); transform:rotate(1deg); font-size:13px; line-height:1.4; box-shadow:3px 3px 0 var(--line); }
+    main { padding:42px clamp(22px,5vw,64px); position:relative; overflow:hidden; }
+    main::after { content:""; position:absolute; right:-75px; bottom:-85px; width:220px; height:220px; border:3px solid var(--line); border-radius:50%; background:var(--blue); z-index:0; }
+    .topline,.station-list,.now-playing { position:relative; z-index:1; }
+    .topline { display:flex; justify-content:space-between; align-items:start; gap:12px; }
+    h1 { font-size:clamp(31px,5vw,52px); letter-spacing:-2.5px; margin:0; line-height:.95; }
+    .status { margin-top:10px; font-size:14px; color:var(--muted); }
+    .live { display:inline-flex; align-items:center; gap:6px; border:2px solid var(--line); background:#fff; border-radius:99px; padding:8px 11px; font-size:12px; font-weight:bold; white-space:nowrap; }
+    .dot { width:9px; height:9px; border-radius:50%; background:#e54555; animation:pulse 1.4s infinite; }
+    .now-playing { margin:35px 0 28px; padding:26px; display:grid; grid-template-columns:110px 1fr auto; gap:22px; align-items:center; border:3px solid var(--line); border-radius:23px; background:var(--pink); box-shadow:6px 6px 0 var(--line); transform:rotate(-.35deg); }
+    .frequency { width:110px; height:110px; border:3px solid var(--line); border-radius:50%; display:grid; place-items:center; background:var(--yellow); font:900 27px/1 Georgia,serif; text-align:center; box-shadow:inset 0 0 0 8px #fff5b5; overflow:hidden; }
+    .frequency.long { font-size:14px; line-height:1.1; padding:14px; overflow-wrap:anywhere; }
+    .eyebrow { font-size:12px; font-weight:bold; letter-spacing:1.6px; text-transform:uppercase; }
+    #station-name { margin:6px 0 4px; font-size:34px; letter-spacing:-1px; }
+    #station-description { margin:0; font-size:15px; }
+    .controls { display:flex; gap:8px; align-items:center; }
+    .round { width:52px; height:52px; border:3px solid var(--line); border-radius:50%; background:#fff; cursor:pointer; font-size:20px; font-weight:bold; box-shadow:3px 3px 0 var(--line); display:inline-grid; place-items:center; line-height:1; }
+    .round:active { transform:translate(3px,3px); box-shadow:none; }
+    #play { width:66px; height:66px; background:var(--blue); }
+    #play svg { width:26px; height:26px; fill:currentColor; display:block; }
+    .section-title { display:flex; justify-content:space-between; align-items:baseline; margin:35px 0 15px; }
+    .section-title h2 { margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px; }
+    .keys { font-size:12px; color:var(--muted); }
+    kbd { padding:2px 5px; border:1px solid var(--ink); border-radius:4px; background:#fff; color:var(--ink); }
+    .station-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .station { min-height:102px; padding:15px; position:relative; display:flex; flex-direction:column; align-items:start; border:2px solid var(--line); border-radius:17px; background:#fff; cursor:pointer; text-align:left; transition:transform .12s,box-shadow .12s; }
+    .station:hover,.station:focus-visible { transform:rotate(-1deg) translateY(-2px); box-shadow:4px 4px 0 var(--line); outline:none; }
+    .station[aria-pressed="true"] { background:var(--yellow); box-shadow:4px 4px 0 var(--line); }
+    .station b { font-size:19px; letter-spacing:-.5px; }
+    .station span { margin-top:4px; font-size:12px; color:var(--muted); }
+    .station i { position:absolute; right:14px; bottom:12px; width:11px; height:11px; border-radius:50%; background:var(--blue); border:1px solid var(--line); }
+    .station[aria-pressed="true"] i { background:#e54555; }
+    .error { margin:14px 0 0; color:#9e1d32; font-size:13px; font-weight:bold; min-height:18px; }
+    .footer { margin-top:30px; font-size:12px; color:var(--muted); }
+    @keyframes pulse { 50% { transform:scale(.65); opacity:.45; } }
+    @media (max-width:760px) { .app { width:min(100% - 20px,600px); margin:10px auto; min-height:calc(100vh - 20px); grid-template-columns:1fr; border-radius:20px; } aside { padding:22px 18px 13px; border-right:0; border-bottom:3px solid var(--line); } .logo { margin-bottom:20px; } .nav { grid-template-columns:repeat(4,1fr); } .nav button { padding:8px; justify-content:center; } .nav button span:not(.nav-symbol) { display:none; } .tip { display:none; } main { padding:28px 18px; } .now-playing { grid-template-columns:76px 1fr; gap:15px; padding:18px; } .frequency { width:76px; height:76px; font-size:19px; } #station-name { font-size:27px; } .controls { grid-column:1/-1; justify-content:center; } .station-list { grid-template-columns:1fr; } .keys { display:none; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="logo">radio<small>DIAL</small></div>
+      <nav class="nav" aria-label="App navigation">
+        <button data-nav="stations" aria-current="page"><span class="nav-symbol">~</span><span>Stations</span></button>
+        <button data-nav="favourites"><span class="nav-symbol">+</span><span>Favourites</span></button>
+        <button data-nav="about"><span class="nav-symbol">i</span><span>About</span></button>
+        <button data-nav="signals"><span class="nav-symbol">!</span><span>Signals</span></button>
+      </nav>
+      <div class="tip" id="tip"><strong>One click, no website maze.</strong><br>Direct public MP3 streams, played straight in your browser.</div>
+    </aside>
+    <main>
+      <div class="topline"><div><h1>Pick a frequency.</h1><div class="status" id="status" aria-live="polite">Choose a station to tune in.</div></div><div class="live"><span class="dot"></span> LIVE RADIO</div></div>
+      <section class="now-playing" aria-label="Now playing">
+        <div class="frequency" id="frequency">LBC<br>UK</div>
+        <div><div class="eyebrow">Now tuned to</div><h2 id="station-name">LBC</h2><p id="station-description">News, conversation and callers.</p></div>
+        <div class="controls"><button class="round" id="previous" aria-label="Previous station">&lt;</button><button class="round" id="play" aria-label="Play LBC">Play</button><button class="round" id="next" aria-label="Next station">&gt;</button><button class="round" id="mute" aria-label="Mute audio">M</button></div>
+      </section>
+      <div class="section-title"><h2>On the dial</h2><span class="keys"><kbd>Up</kbd> <kbd>Down</kbd> tune, <kbd>Space</kbd> play, <kbd>M</kbd> mute</span></div>
+      <div class="station-list" id="station-list"></div>
+      <p class="error" id="error" aria-live="polite"></p>
+      <p class="footer">Streams are supplied by their broadcasters. They may include broadcast advertising.</p>
+    </main>
+  </div>
+  <audio id="player" preload="none"></audio>
+  <script>
+    const stations = [
+      { name: "LBC", code: "LBC UK", description: "News, conversation and callers.", url: "https://media-ice.musicradio.com/LBCUKMP3" },
+      { name: "LBC News", code: "LBC NEWS", description: "Rolling UK and world news.", url: "https://media-ice.musicradio.com/LBCNewsUKMP3" },
+      { name: "Capital", code: "CAPITAL", description: "Hit music and pop culture.", url: "https://media-ice.musicradio.com/CapitalUKMP3" },
+      { name: "Heart", code: "HEART", description: "Feel-good hits, all day.", url: "https://media-ice.musicradio.com/HeartUKMP3" },
+      { name: "Radio X", code: "RADIO X", description: "Indie, rock and big personalities.", url: "https://media-ice.musicradio.com/RadioXUKMP3" },
+      { name: "Classic FM", code: "CLASSIC", description: "Classical music, made easy.", url: "https://media-ice.musicradio.com/ClassicFMMP3" },
+      { name: "Smooth", code: "SMOOTH", description: "Your easy listening escape.", url: "https://media-ice.musicradio.com/SmoothUKMP3" },
+      { name: "Gold", code: "GOLD", description: "Classic hits from decades past.", url: "https://media-ice.musicradio.com/GoldMP3" },
+      { name: "NTS 1", code: "NTS 1", description: "Eclectic shows from London and beyond.", url: "https://stream-relay-geo.ntslive.net/stream" },
+      { name: "NTS 2", code: "NTS 2", description: "More specialist music and guests.", url: "https://stream-relay-geo.ntslive.net/stream2" }
+    ];
+    const player = document.querySelector("#player");
+    const ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    const ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
+    const list = document.querySelector("#station-list");
+    const play = document.querySelector("#play");
+    const mute = document.querySelector("#mute");
+    const status = document.querySelector("#status");
+    const error = document.querySelector("#error");
+    const tip = document.querySelector("#tip");
+    let current = 0;
+    function render() {
+      const station = stations[current];
+      const frequency = document.querySelector("#frequency");
+      frequency.innerHTML = station.code.replace(" ", "<br>");
+      frequency.classList.toggle("long", station.code.replace(/ /g, "").length > 5);
+      document.querySelector("#station-name").textContent = station.name;
+      document.querySelector("#station-description").textContent = station.description;
+      play.innerHTML = player.paused ? ICON_PLAY : ICON_PAUSE;
+      play.setAttribute("aria-label", `${player.paused ? "Play" : "Pause"} ${station.name}`);
+      mute.textContent = player.muted ? "U" : "M";
+      mute.setAttribute("aria-label", player.muted ? "Unmute audio" : "Mute audio");
+      list.innerHTML = stations.map((item, index) => `<button class="station" aria-pressed="${index === current}" data-index="${index}"><b>${item.name}</b><span>${item.description}</span><i></i></button>`).join("");
+    }
+    async function tune(index, shouldPlay = !player.paused) {
+      current = (index + stations.length) % stations.length;
+      player.src = stations[current].url;
+      error.textContent = "";
+      status.textContent = `Tuned to ${stations[current].name}.`;
+      render();
+      if (shouldPlay) await start();
+    }
+    async function start() {
+      try { await player.play(); status.textContent = `Listening live to ${stations[current].name}.`; error.textContent = ""; }
+      catch { error.textContent = "Your browser blocked autoplay. Press Play to start the stream."; }
+      render();
+    }
+    play.addEventListener("click", () => player.paused ? start() : player.pause());
+    player.addEventListener("pause", () => { if (player.src) status.textContent = `Paused — press Play to resume ${stations[current].name}.`; render(); });
+    player.addEventListener("playing", render);
+    player.addEventListener("error", () => { error.textContent = `Could not load ${stations[current].name}'s stream. The broadcaster may have changed its URL.`; render(); });
+    document.querySelector("#previous").addEventListener("click", () => tune(current - 1));
+    document.querySelector("#next").addEventListener("click", () => tune(current + 1));
+    mute.addEventListener("click", () => { player.muted = !player.muted; render(); });
+    list.addEventListener("click", event => { const button = event.target.closest(".station"); if (button) tune(Number(button.dataset.index)); });
+    document.querySelector(".nav").addEventListener("click", event => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      document.querySelectorAll(".nav button").forEach(item => item.removeAttribute("aria-current"));
+      button.setAttribute("aria-current", "page");
+      const messages = {
+        stations: "<strong>Stations.</strong><br>Pick a card, then use the arrow keys to surf the dial.",
+        favourites: "<strong>Favourites.</strong><br>Your browser remembers this tuning session, but station saving is not wired up yet.",
+        about: "<strong>Radio Dial.</strong><br>A tiny direct-stream player. No accounts, no feed of articles.",
+        signals: "<strong>Signals.</strong><br>Red dot means the selected station is live. Playback failures appear below the dial."
+      };
+      tip.innerHTML = messages[button.dataset.nav];
+      if (button.dataset.nav === "stations") document.querySelector("#station-list .station").focus();
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "ArrowDown" || event.key === "ArrowRight") { event.preventDefault(); tune(current + 1); }
+      if (event.key === "ArrowUp" || event.key === "ArrowLeft") { event.preventDefault(); tune(current - 1); }
+      if (event.code === "Space" && !event.target.matches("button")) { event.preventDefault(); player.paused ? start() : player.pause(); }
+      if (event.key.toLowerCase() === "m") { player.muted = !player.muted; render(); }
+    });
+    render();
+  </script>
+</body>
+</html>
