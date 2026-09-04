@@ -80,6 +80,7 @@
     .station b { font-size:19px; letter-spacing:-.5px; }
     .station span { margin-top:4px; font-size:12px; opacity:0.8; }
     .station i { position:absolute; right:14px; bottom:12px; width:11px; height:11px; border-radius:50%; background:var(--blue); border:1px solid var(--line); }
+    .station .fstar { position:absolute; top:8px; right:12px; font-size:18px; cursor:pointer; color:var(--ink); }
     .station[aria-pressed="true"] i { background:#e54555; }
     .error { margin:14px 0 0; color:#e54555; font-size:13px; font-weight:bold; min-height:18px; }
     .footer { margin-top:30px; font-size:12px; color:var(--muted); }
@@ -116,6 +117,7 @@
         <div class="logo">radio<small>DIAL</small></div>
         <nav class="nav" aria-label="App navigation">
           <button data-nav="stations" aria-current="page"><span class="nav-symbol">~</span><span>Stations</span></button>
+          <button data-nav="favourites"><span class="nav-symbol">★</span><span>Favourites</span></button>
           <button data-nav="about"><span class="nav-symbol">i</span><span>About</span></button>
           <button data-nav="signals"><span class="nav-symbol">!</span><span>Signals</span></button>
         </nav>
@@ -138,7 +140,7 @@
           <button class="round" id="previous" aria-label="Previous station">&lt;</button>
           <button class="round" id="play" aria-label="Play LBC">Play</button>
           <button class="round" id="next" aria-label="Next station">&gt;</button>
-          <button class="round" id="mute" aria-label="Mute audio">M</button>
+          <button class="round" id="mute" aria-label="Mute audio">M</button><button class="round" id="fav" aria-label="Save to favourites">☆</button>
           <div class="volume-box">
             <input type="range" class="vol-slider" id="volume" min="0" max="1" step="0.05" value="1" aria-label="Volume">
           </div>
@@ -152,26 +154,16 @@
   </div>
   <audio id="player" preload="none"></audio>
   <script>
-    const stations = [
-      { name: "LBC", code: "LBC UK", description: "News, conversation and callers.", url: "https://media-ice.musicradio.com/LBCUKMP3" },
-      { name: "LBC News", code: "LBC NEWS", description: "Rolling UK and world news.", url: "https://media-ice.musicradio.com/LBCNewsUKMP3" },
-      { name: "Capital", code: "CAPITAL", description: "Hit music and pop culture.", url: "https://media-ice.musicradio.com/CapitalUKMP3" },
-      { name: "Heart", code: "HEART", description: "Feel-good hits, all day.", url: "https://media-ice.musicradio.com/HeartUKMP3" },
-      { name: "Radio X", code: "RADIO X", description: "Indie, rock and big personalities.", url: "https://media-ice.musicradio.com/RadioXUKMP3" },
-      { name: "Classic FM", code: "CLASSIC", description: "Classical music, made easy.", url: "https://media-ice.musicradio.com/ClassicFMMP3" },
-      { name: "Smooth", code: "SMOOTH", description: "Your easy listening escape.", url: "https://media-ice.musicradio.com/SmoothUKMP3" },
-      { name: "Gold", code: "GOLD", description: "Classic hits from decades past.", url: "https://media-ice.musicradio.com/GoldMP3" },
-      { name: "Kisstory", code: "KISSTORY", description: "Old skool and anthems.", url: "https://stream-mz.planetradio.co.uk/kisstory.mp3" },
-      { name: "BBC Radio 1", code: "BBC R1", description: "The best new music and entertainment.", url: "https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8" },
-      { name: "BBC 6 Music", code: "BBC 6M", description: "Alternative music for curious minds.", url: "https://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8" },
-      { name: "NTS 1", code: "NTS 1", description: "Eclectic shows from London and beyond.", url: "https://stream-relay-geo.ntslive.net/stream" },
-      { name: "NTS 2", code: "NTS 2", description: "More specialist music and guests.", url: "https://stream-relay-geo.ntslive.net/stream2" },
-      { name: "talkSPORT", code: "TALKSPORT", description: "Live sport, debate and commentary.", url: "https://radio.talksport.com/stream" },
-      { name: "Magic", code: "MAGIC", description: "Mellow hits and easy favourites.", url: "https://stream-mz.hellorayo.co.uk/magicnational.mp3?direct=true&aw_0_1st.playerid=BMUK_TuneIn&aw_0_1st.skey=7374499933&stationCode=mag" },
-      { name: "Absolute", code: "ABSOLUTE", description: "Rock, indie and real music.", url: "https://stream-ar.hellorayo.co.uk/absoluteradiohigh.aac?direct=true&aw_0_1st.skey=1602676850&rp_source=1" },
-      { name: "Radio 2", code: "RADIO 2", description: "Classic hits and daytime companions.", url: "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d96000.norewind.m3u8" },
-      { name: "Radio 4", code: "RADIO 4", description: "News, drama and speech.", url: "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d96000.norewind.m3u8" }
-    ];
+    let stations = [];
+    let stationsReady = null;
+    function loadStations() {
+      if (!stationsReady) {
+        stationsReady = fetch("stations.json")
+          .then((r) => { if (!r.ok) throw new Error("stations.json missing"); return r.json(); })
+          .then((data) => { stations = data; return stations; });
+      }
+      return stationsReady;
+    }
     const player = document.querySelector("#player");
     const ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
     const ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
@@ -200,6 +192,15 @@
 
     let isBuffering = false;
     let currentTrack = "";
+    let view = "stations";
+    let favs = [];
+    try { favs = JSON.parse(localStorage.getItem("radiodial_favs") || "[]"); } catch { favs = []; }
+    function saveFavs() { localStorage.setItem("radiodial_favs", JSON.stringify(favs)); }
+    function toggleFav(name) {
+      favs = favs.includes(name) ? favs.filter((f) => f !== name) : [...favs, name];
+      saveFavs();
+      render();
+    }
     let metaAbortController = null;
     let hls = null;
     async function ensureHls() {
@@ -342,7 +343,18 @@
       }
       mute.textContent = player.muted ? "U" : "M";
       mute.setAttribute("aria-label", player.muted ? "Unmute audio" : "Mute audio");
-      list.innerHTML = stations.map((item, index) => `<button class="station" aria-pressed="${index === current}" data-index="${index}"><b>${item.name}</b><span>${item.description}</span><i></i></button>`).join("");
+      const favBtn = document.querySelector("#fav");
+      if (favBtn) {
+        const saved = favs.includes(station.name);
+        favBtn.textContent = saved ? "★" : "☆";
+        favBtn.setAttribute("aria-label", saved ? "Remove from favourites" : "Save to favourites");
+      }
+      const visible = view === "favourites" ? stations.map((s, i) => ({ s, i })).filter(({ s }) => favs.includes(s.name)) : stations.map((s, i) => ({ s, i }));
+      if (view === "favourites" && visible.length === 0) {
+        list.innerHTML = `<p class="footer">No favourites yet — tap ☆ on a station to pin it here.</p>`;
+        return;
+      }
+      list.innerHTML = visible.map(({ s: item, i: index }) => `<button class="station" aria-pressed="${index === current}" data-index="${index}"><span class="fstar" data-fav="${index}" role="button" aria-label="favourite ${item.name}">${favs.includes(item.name) ? "★" : "☆"}</span><b>${item.name}</b><span>${item.description}</span><i></i></button>`).join("");
     }
 
     async function tune(index, shouldPlay = !player.paused) {
@@ -469,7 +481,13 @@
       else volumeSlider.value = player.volume;
       render();
     });
-    list.addEventListener("click", event => { const button = event.target.closest(".station"); if (button) tune(Number(button.dataset.index), true); });
+    document.querySelector("#fav").addEventListener("click", () => toggleFav(stations[current].name));
+    list.addEventListener("click", event => {
+      const star = event.target.closest("[data-fav]");
+      if (star) { toggleFav(stations[Number(star.dataset.fav)].name); return; }
+      const button = event.target.closest(".station");
+      if (button) tune(Number(button.dataset.index), true);
+    });
 
     document.querySelector(".nav").addEventListener("click", event => {
       const button = event.target.closest("button");
@@ -478,10 +496,13 @@
       button.setAttribute("aria-current", "page");
       const messages = {
         stations: "<strong>Stations.</strong><br>Pick a card, then use the arrow keys to surf the dial.",
+        favourites: "<strong>Favourites.</strong><br>Tap ☆ on any station to pin it here. Saved in this browser.",
         about: "<strong>Radio Dial.</strong><br>A tiny direct-stream player. No accounts, no feed of articles.",
         signals: "<strong>Signals.</strong><br>Red dot means the selected station is live. Playback failures appear below the dial."
       };
       tip.innerHTML = messages[button.dataset.nav] || "";
+      view = button.dataset.nav === "favourites" ? "favourites" : "stations";
+      render();
       if (button.dataset.nav === "stations") document.querySelector("#station-list .station")?.focus();
     });
 
@@ -493,10 +514,21 @@
       if (event.key.toLowerCase() === "t") { toggleTheme(); }
     });
 
-    if (!stations[current].url.includes(".m3u8")) player.src = stations[current].url;
-    render();
+    loadStations().then(() => {
+      const saved = parseInt(localStorage.getItem("radiodial_station") || "0", 10);
+      current = Number.isFinite(saved) && saved >= 0 && saved < stations.length ? saved : 0;
+      if (favs.length > 0) {
+        view = "favourites";
+        document.querySelectorAll(".nav button").forEach((item) => item.removeAttribute("aria-current"));
+        document.querySelector('[data-nav="favourites"]')?.setAttribute("aria-current", "page");
+      }
+      if (!stations[current].url.includes(".m3u8")) player.src = stations[current].url;
+      render();
+    }).catch(() => {
+      error.textContent = "Couldn't load stations.json — serve this folder over http (python3 -m http.server).";
+    });
     setInterval(() => {
-      if (!player.paused) fetchMetadata(current);
+      if (!player.paused && stations.length) fetchMetadata(current);
     }, 30000);
   </script>
 </body>
