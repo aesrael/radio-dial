@@ -1,5 +1,7 @@
 # Radio Dial
 
+<img src="favicon.svg" alt="Radio Dial logo" width="96">
+
 A tiny direct-stream radio player I made for myself, to listen to the stations I care about. No accounts, no maze.
 
 **Live URL:** [https://radio-dial.pages.dev](https://radio-dial.pages.dev)
