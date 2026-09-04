@@ -1,0 +1,176 @@
+[
+  {
+    "name": "LBC",
+    "code": "LBC UK",
+    "description": "News, conversation and callers.",
+    "url": "https://media-ice.musicradio.com/LBCUKMP3"
+  },
+  {
+    "name": "LBC News",
+    "code": "LBC NEWS",
+    "description": "Rolling UK and world news.",
+    "url": "https://media-ice.musicradio.com/LBCNewsUKMP3"
+  },
+  {
+    "name": "Capital",
+    "code": "CAPITAL",
+    "description": "Hit music and pop culture.",
+    "url": "https://media-ice.musicradio.com/CapitalUKMP3"
+  },
+  {
+    "name": "Heart",
+    "code": "HEART",
+    "description": "Feel-good hits, all day.",
+    "url": "https://media-ice.musicradio.com/HeartUKMP3"
+  },
+  {
+    "name": "Radio X",
+    "code": "RADIO X",
+    "description": "Indie, rock and big personalities.",
+    "url": "https://media-ice.musicradio.com/RadioXUKMP3"
+  },
+  {
+    "name": "Classic FM",
+    "code": "CLASSIC",
+    "description": "Classical music, made easy.",
+    "url": "https://media-ice.musicradio.com/ClassicFMMP3"
+  },
+  {
+    "name": "Smooth",
+    "code": "SMOOTH",
+    "description": "Your easy listening escape.",
+    "url": "https://media-ice.musicradio.com/SmoothUKMP3"
+  },
+  {
+    "name": "Gold",
+    "code": "GOLD",
+    "description": "Classic hits from decades past.",
+    "url": "https://media-ice.musicradio.com/GoldMP3"
+  },
+  {
+    "name": "Kisstory",
+    "code": "KISSTORY",
+    "description": "Old skool and anthems.",
+    "url": "https://stream-mz.planetradio.co.uk/kisstory.mp3"
+  },
+  {
+    "name": "BBC Radio 1",
+    "code": "BBC R1",
+    "description": "The best new music and entertainment.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8"
+  },
+  {
+    "name": "BBC 6 Music",
+    "code": "BBC 6M",
+    "description": "Alternative music for curious minds.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8"
+  },
+  {
+    "name": "NTS 1",
+    "code": "NTS 1",
+    "description": "Eclectic shows from London and beyond.",
+    "url": "https://stream-relay-geo.ntslive.net/stream"
+  },
+  {
+    "name": "NTS 2",
+    "code": "NTS 2",
+    "description": "More specialist music and guests.",
+    "url": "https://stream-relay-geo.ntslive.net/stream2"
+  },
+  {
+    "name": "talkSPORT",
+    "code": "TALKSPORT",
+    "description": "Live sport, debate and commentary.",
+    "url": "https://radio.talksport.com/stream"
+  },
+  {
+    "name": "Magic",
+    "code": "MAGIC",
+    "description": "Mellow hits and easy favourites.",
+    "url": "https://stream-mz.hellorayo.co.uk/magicnational.mp3?direct=true&aw_0_1st.playerid=BMUK_TuneIn&aw_0_1st.skey=7374499933&stationCode=mag"
+  },
+  {
+    "name": "Absolute",
+    "code": "ABSOLUTE",
+    "description": "Rock, indie and real music.",
+    "url": "https://stream-ar.hellorayo.co.uk/absoluteradiohigh.aac?direct=true&aw_0_1st.skey=1602676850&rp_source=1"
+  },
+  {
+    "name": "Radio 2",
+    "code": "RADIO 2",
+    "description": "Classic hits and daytime companions.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d96000.norewind.m3u8"
+  },
+  {
+    "name": "Radio 4",
+    "code": "RADIO 4",
+    "description": "News, drama and speech.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d96000.norewind.m3u8"
+  },
+  {
+    "name": "1Xtra",
+    "code": "1XTRA",
+    "description": "Hip-hop, grime, R&B and dance.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_92079267/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d96000.norewind.m3u8"
+  },
+  {
+    "name": "5 Live",
+    "code": "5 LIVE",
+    "description": "Live news and sport.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8"
+  },
+  {
+    "name": "Heart 80s",
+    "code": "H80S",
+    "description": "Non-stop 80s classics.",
+    "url": "https://media-ssl.musicradio.com/Heart80sMP3"
+  },
+  {
+    "name": "Virgin",
+    "code": "VIRGIN",
+    "description": "Rock, pop and frank opinions.",
+    "url": "https://radio.virginradio.co.uk/stream"
+  },
+  {
+    "name": "Times Radio",
+    "code": "TIMES",
+    "description": "Smart speech and interviews.",
+    "url": "https://timesradio.wireless.radio/stream"
+  },
+  {
+    "name": "Planet Rock",
+    "code": "PROCK",
+    "description": "Classic and modern rock.",
+    "url": "https://stream-mz.hellorayo.co.uk/planetrock.aac?direct=true&aw_0_1st.playerid=BMUK_Airable&aw_0_1st.skey=6778249992"
+  },
+  {
+    "name": "GB News",
+    "code": "GB NEWS",
+    "description": "News debate and opinion.",
+    "url": "https://listen-gbnews.sharp-stream.com/gbnews.mp3"
+  },
+  {
+    "name": "Groove Salad",
+    "code": "GROOVE",
+    "description": "Ambient beats from SomaFM.",
+    "url": "https://ice1.somafm.com/groovesalad-128-mp3"
+  },
+  {
+    "name": "Deep Space",
+    "code": "SPACE",
+    "description": "Deep ambient from SomaFM.",
+    "url": "https://ice1.somafm.com/deepspaceone-128-mp3"
+  },
+  {
+    "name": "KEXP",
+    "code": "KEXP",
+    "description": "Independent music from Seattle.",
+    "url": "https://kexp-mp3-128.streamguys1.com/kexp128.mp3"
+  },
+  {
+    "name": "Heart 90s",
+    "code": "H90S",
+    "description": "Non-stop 90s classics.",
+    "url": "https://media-ssl.musicradio.com/Heart90sMP3"
+  }
+]
