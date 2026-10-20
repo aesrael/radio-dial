@@ -304,22 +304,6 @@
     "country": "GB"
   },
   {
-    "name": "Kool FM",
-    "code": "Kool FM",
-    "description": "breakbeat · dancefloor · UK · 128k",
-    "url": "https://admin.stream.rinse.fm/proxy/kool/stream",
-    "group": "UK",
-    "country": "GB"
-  },
-  {
-    "name": "Virgin Radio Anthems",
-    "code": "Virgin Radio",
-    "description": "anthems · national · UK",
-    "url": "https://radio.virginradio.co.uk/stream-anthems",
-    "group": "UK",
-    "country": "GB"
-  },
-  {
     "name": "KISS",
     "code": "KISS",
     "description": "bauer radio · kiss · UK · 112k",
@@ -494,86 +478,6 @@
     "url": "https://radio.garden/api/ara/content/listen/-vN66oE0/channel.mp3?1770934434229",
     "group": "US",
     "country": "US"
-  },
-  {
-    "name": "Hits 1 Algérie",
-    "code": "Hits 1 Algérie",
-    "description": "pop · top40 · Algeria · 256k",
-    "url": "https://radio12.pro-fhi.net/listen/whmnrlow/stream",
-    "group": "Pop",
-    "country": "DZ"
-  },
-  {
-    "name": "Los 40 Urban",
-    "code": "Los 40 Urban",
-    "description": "dance · pop · Spain · 128k",
-    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_URBAN.mp3",
-    "group": "Pop",
-    "country": "ES"
-  },
-  {
-    "name": "Radio 103FM",
-    "code": "Radio 103FM",
-    "description": "Pop · Israel",
-    "url": "https://cdn.cybercdn.live/103FM/Live/icecast.audio",
-    "group": "Pop",
-    "country": "IL"
-  },
-  {
-    "name": "Fun Radio",
-    "code": "Fun Radio",
-    "description": "Pop · Belgium · 128k",
-    "url": "https://funradiobe.ice.infomaniak.ch/funradiobe-high.mp3",
-    "group": "Pop",
-    "country": "BE"
-  },
-  {
-    "name": "Sky Radio Hits",
-    "code": "Sky Radio Hits",
-    "description": "hits · The Netherlands · 128k",
-    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SRGSTR01.mp3?dist=skyradio_web&ttag=talpa_consent:0&gdpr=1&gdpr_consent=BO2svb6O2svb6ADABANLDTAAAAAxKAAA",
-    "group": "Pop",
-    "country": "NL"
-  },
-  {
-    "name": "0 N - Greatest Hits on Radio",
-    "code": "0 N - Greatest",
-    "description": "2000er · 2000s · Germany · 128k",
-    "url": "https://0n-greatesthits.radionetz.de/0n-greatesthits.mp3",
-    "group": "Pop",
-    "country": "DE"
-  },
-  {
-    "name": "Los 40",
-    "code": "Los 40",
-    "description": "pop · Spain · 128k",
-    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/Los40.mp3",
-    "group": "Pop",
-    "country": "ES"
-  },
-  {
-    "name": "NRJ",
-    "code": "NRJ",
-    "description": "pop · Finland · 64k",
-    "url": "https://stream-redirect.bauermedia.fi/nrj/nrj_64.aac?aw_0_1st.bauer_loggedin=false&aw_0_1st.playerid=BMUK_tunein",
-    "group": "Pop",
-    "country": "FI"
-  },
-  {
-    "name": "Hitradio Ö3",
-    "code": "Hitradio Ö3",
-    "description": "Pop · Germany · 192k",
-    "url": "https://orf-live.ors-shoutcast.at/oe3-q2a",
-    "group": "Pop",
-    "country": "DE"
-  },
-  {
-    "name": "Radio Swiss Pop",
-    "code": "Radio Swiss Pop",
-    "description": "pop · Switzerland · 128k",
-    "url": "https://livestreaming-node-2.srg-ssr.ch/srgssr/rsp/mp3/128",
-    "group": "Pop",
-    "country": "CH"
   },
   {
     "name": ".100 Hip hop and RNB FM",
@@ -840,14 +744,6 @@
     "country": "DE"
   },
   {
-    "name": "0 N - Electro on Radio",
-    "code": "0 N - Electro on",
-    "description": "dance · deephouse · Germany · 128k",
-    "url": "https://0n-electro.radionetz.de/0n-electro.mp3",
-    "group": "Electronic",
-    "country": "DE"
-  },
-  {
     "name": "__CLUB__ by rautemusik (rm.fm)",
     "code": "__CLUB__ by",
     "description": "dance · deejay · Germany · 192k",
@@ -862,6 +758,14 @@
     "url": "https://edmdnb.com:448/radio/8000/radio.mp3",
     "group": "Electronic",
     "country": "US"
+  },
+  {
+    "name": "100 BEST IBIZA DEEP HOUSE",
+    "code": "100 BEST IBIZA",
+    "description": "chill · chill house · Canada · 128k",
+    "url": "https://stream.zeno.fm/lwv6zqgtv1dtv",
+    "group": "Electronic",
+    "country": "CA"
   },
   {
     "name": "Bossa Jazz Brasil",
@@ -1024,14 +928,6 @@
     "country": "FR"
   },
   {
-    "name": "Blues Radio",
-    "code": "Blues Radio",
-    "description": "Blues · Greece · 320k",
-    "url": "https://i4.streams.ovh/sc/bluesrad/stream",
-    "group": "Blues",
-    "country": "GR"
-  },
-  {
     "name": "70s 80s Disco Funk ModernSoul Boogie",
     "code": "70s 80s Disco",
     "description": "1970s · 1980s · USA · 192k",
@@ -1072,14 +968,6 @@
     "country": "US"
   },
   {
-    "name": "0 N - Disco on Radio",
-    "code": "0 N - Disco on",
-    "description": "70er · 70s · Germany · 128k",
-    "url": "https://0n-disco.radionetz.de/0n-disco.mp3",
-    "group": "Soul & Funk",
-    "country": "DE"
-  },
-  {
     "name": "COOLFM Funky&Soul",
     "code": "COOLFM",
     "description": "funky · soul · Hungary · 128k",
@@ -1110,6 +998,14 @@
     "url": "https://broadcast.miami/proxy/motown?mp=/stream/;",
     "group": "Soul & Funk",
     "country": "US"
+  },
+  {
+    "name": "Radio Capital Funky Town",
+    "code": "Radio Capital",
+    "description": "disco funk · funk · Italy · 122k",
+    "url": "https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiocapitalfunkytown/radiocapitalfunkytown/master_ma.m3u8",
+    "group": "Soul & Funk",
+    "country": "IT"
   },
   {
     "name": "REGGAE CHILL CAFE",
@@ -1320,20 +1216,20 @@
     "country": "US"
   },
   {
-    "name": "YourClassical",
-    "code": "YourClassical",
-    "description": "classical · USA · 127k",
-    "url": "https://ycradio.stream.publicradio.org/ycradio.aac",
-    "group": "Classical",
-    "country": "US"
-  },
-  {
     "name": "classic nl mind radio",
     "code": "classic nl mind",
     "description": "classic hits · classical · The Netherlands · 256k",
     "url": "https://stream.classic.nl/classicnl-mindradio.mp3",
     "group": "Classical",
     "country": "NL"
+  },
+  {
+    "name": "Radio Art - Classical Crossover",
+    "code": "Radio Art",
+    "description": "classical · opera · Greece · 96k",
+    "url": "https://live.radioart.com/fClassical_crossover.mp3",
+    "group": "Classical",
+    "country": "GR"
   },
   {
     "name": "SomaFM Space Station Soma",

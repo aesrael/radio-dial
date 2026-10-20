@@ -39,7 +39,6 @@ UA = "RadioDial/1.0 (+https://radio-dial.pages.dev)"
 # UK and US are hand-picked. Name matching keeps genre groups from filling with
 # stations that merely carry the tag (a general station tagged "classical").
 GENRES = {
-    "Pop":             (["pop", "top 40", "hits"], 12, r"pop|hit|chart|top ?40|\b40\b"),
     "Hip-Hop & R&B":   (["hip hop", "r&b", "rap"], 12, r"hip.?hop|\brap\b|rnb|r&b|urban|grime|trap|soul"),
     "Rock":            (["rock", "alternative", "indie"], 12, r"rock|metal|punk|indie|alternat|grunge|guitar"),
     "Electronic":      (["electronic", "house", "techno"], 12, r"dance|techno|house|trance|electro|drum|\bdnb\b|bass|club|rave|mix|beats"),
@@ -56,8 +55,6 @@ GROUP_ORDER = ["UK", "US", *GENRES]
 
 # Handful of well-known stations that raise a genre's quality above tag search.
 SEEDS = {
-    "Pop": ["Radio 538", "NRJ", "Hitradio Ö3", "Fun Radio", "Radio Swiss Pop",
-            "Sky Radio Hits", "LOS 40", "Radio 1"],
     "Jazz": ["FIP", "WBGO", "WWOZ", "Jazz24", "Radio Swiss Jazz", "TSF Jazz", "Jazz FM"],
     "Blues": ["Blues Radio", "BluesMen Channel", "Belly Up 4 Blues"],
     "Classical": ["Radio Swiss Classic", "WQXR", "Venice Classic Radio", "YourClassical"],
