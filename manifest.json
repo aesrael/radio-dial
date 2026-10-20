@@ -1,7 +1,7 @@
 {
   "name": "Radio Dial",
   "short_name": "Radio Dial",
-  "description": "A tiny direct-stream UK radio player. No accounts, no maze.",
+  "description": "A tiny direct-stream radio player — UK stations first, the rest of the world after. No accounts, no maze.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fffdf9",
