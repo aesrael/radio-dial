@@ -304,6 +304,22 @@
     "country": "GB"
   },
   {
+    "name": "Kool FM",
+    "code": "Kool FM",
+    "description": "breakbeat · dancefloor · UK · 128k",
+    "url": "https://admin.stream.rinse.fm/proxy/kool/stream",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Virgin Radio Anthems",
+    "code": "Virgin Radio",
+    "description": "anthems · national · UK",
+    "url": "https://radio.virginradio.co.uk/stream-anthems",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
     "name": "KISS",
     "code": "KISS",
     "description": "bauer radio · kiss · UK · 112k",
@@ -744,6 +760,14 @@
     "country": "DE"
   },
   {
+    "name": "0 N - Electro on Radio",
+    "code": "0 N - Electro on",
+    "description": "dance · deephouse · Germany · 128k",
+    "url": "https://0n-electro.radionetz.de/0n-electro.mp3",
+    "group": "Electronic",
+    "country": "DE"
+  },
+  {
     "name": "__CLUB__ by rautemusik (rm.fm)",
     "code": "__CLUB__ by",
     "description": "dance · deejay · Germany · 192k",
@@ -758,14 +782,6 @@
     "url": "https://edmdnb.com:448/radio/8000/radio.mp3",
     "group": "Electronic",
     "country": "US"
-  },
-  {
-    "name": "100 BEST IBIZA DEEP HOUSE",
-    "code": "100 BEST IBIZA",
-    "description": "chill · chill house · Canada · 128k",
-    "url": "https://stream.zeno.fm/lwv6zqgtv1dtv",
-    "group": "Electronic",
-    "country": "CA"
   },
   {
     "name": "Bossa Jazz Brasil",
@@ -928,6 +944,14 @@
     "country": "FR"
   },
   {
+    "name": "Blues Radio",
+    "code": "Blues Radio",
+    "description": "Blues · Greece · 320k",
+    "url": "https://i4.streams.ovh/sc/bluesrad/stream",
+    "group": "Blues",
+    "country": "GR"
+  },
+  {
     "name": "70s 80s Disco Funk ModernSoul Boogie",
     "code": "70s 80s Disco",
     "description": "1970s · 1980s · USA · 192k",
@@ -968,6 +992,14 @@
     "country": "US"
   },
   {
+    "name": "0 N - Disco on Radio",
+    "code": "0 N - Disco on",
+    "description": "70er · 70s · Germany · 128k",
+    "url": "https://0n-disco.radionetz.de/0n-disco.mp3",
+    "group": "Soul & Funk",
+    "country": "DE"
+  },
+  {
     "name": "COOLFM Funky&Soul",
     "code": "COOLFM",
     "description": "funky · soul · Hungary · 128k",
@@ -988,14 +1020,6 @@
     "code": "SOUL RADIO",
     "description": "classic soul · soul · USA · 194k",
     "url": "https://listen.soulradio.us/us",
-    "group": "Soul & Funk",
-    "country": "US"
-  },
-  {
-    "name": "Radio Motown",
-    "code": "Radio Motown",
-    "description": "disco · funk · USA · 320k",
-    "url": "https://broadcast.miami/proxy/motown?mp=/stream/;",
     "group": "Soul & Funk",
     "country": "US"
   },
@@ -1216,20 +1240,20 @@
     "country": "US"
   },
   {
+    "name": "YourClassical",
+    "code": "YourClassical",
+    "description": "classical · USA · 127k",
+    "url": "https://ycradio.stream.publicradio.org/ycradio.aac",
+    "group": "Classical",
+    "country": "US"
+  },
+  {
     "name": "classic nl mind radio",
     "code": "classic nl mind",
     "description": "classic hits · classical · The Netherlands · 256k",
     "url": "https://stream.classic.nl/classicnl-mindradio.mp3",
     "group": "Classical",
     "country": "NL"
-  },
-  {
-    "name": "Radio Art - Classical Crossover",
-    "code": "Radio Art",
-    "description": "classical · opera · Greece · 96k",
-    "url": "https://live.radioart.com/fClassical_crossover.mp3",
-    "group": "Classical",
-    "country": "GR"
   },
   {
     "name": "SomaFM Space Station Soma",
@@ -1310,85 +1334,5 @@
     "url": "https://listen.reyfm.de/chillout_192kbps.mp3",
     "group": "Ambient & Chill",
     "country": ""
-  },
-  {
-    "name": "SomaFM Underground 80s",
-    "code": "SomaFM",
-    "description": "80s · new wave · USA · 128k",
-    "url": "https://ice6.somafm.com/u80s-128-mp3",
-    "group": "Oldies & Retro",
-    "country": "US"
-  },
-  {
-    "name": "0 N - 70s on Radio",
-    "code": "0 N - 70s on",
-    "description": "70er · 70s · Germany · 128k",
-    "url": "https://0n-70s.radionetz.de/0n-70s.mp3",
-    "group": "Oldies & Retro",
-    "country": "DE"
-  },
-  {
-    "name": "Oxygen The 80s Hits",
-    "code": "Oxygen The 80s",
-    "description": "80's · 80s · Hungary · 320k",
-    "url": "https://oxygenmusic.hu:8443/oxygenthe80shits",
-    "group": "Oldies & Retro",
-    "country": "HU"
-  },
-  {
-    "name": "Goldy Mukesh",
-    "code": "Goldy Mukesh",
-    "description": "bollywood · hindu · India · 112k",
-    "url": "https://stream.zeno.fm/t39watus1p8uv",
-    "group": "Oldies & Retro",
-    "country": "IN"
-  },
-  {
-    "name": "0 N - 80s on Radio",
-    "code": "0 N - 80s on",
-    "description": "80er · 80s · Germany · 128k",
-    "url": "https://0n-80s.radionetz.de/0n-80s.mp3",
-    "group": "Oldies & Retro",
-    "country": "DE"
-  },
-  {
-    "name": "181.FM - Super 70s",
-    "code": "181.FM - Super",
-    "description": "70s · waynesboro · USA · 128k",
-    "url": "https://listen.181fm.com/181-70s_128k.mp3",
-    "group": "Oldies & Retro",
-    "country": "US"
-  },
-  {
-    "name": "OLDIE ANTENNE",
-    "code": "OLDIE ANTENNE",
-    "description": "60's · 70's · Germany · 128k",
-    "url": "https://s1-webradio.oldie-antenne.de/oldie-antenne?aw_0_1st.playerid=OldieAntenneWebPlayer",
-    "group": "Oldies & Retro",
-    "country": "DE"
-  },
-  {
-    "name": "Oxygen Oldies",
-    "code": "Oxygen Oldies",
-    "description": "classic hits · oldies · Hungary · 320k",
-    "url": "https://oxygenmusic.hu:8443/oxygenoldies",
-    "group": "Oldies & Retro",
-    "country": "HU"
-  },
-  {
-    "name": "70s 80s 90s RdMix Network",
-    "code": "70s 80s 90s",
-    "description": "00's · 00s · Canada · 192k",
-    "url": "https://cast1.torontocast.com:1830/stream",
-    "group": "Oldies & Retro",
-    "country": "CA"
-  },
-  {
-    "name": "1 A - Oldies von 1A Radio",
-    "code": "1 A - Oldies von",
-    "description": "60er · 60s · Germany · 128k",
-    "url": "https://1a-oldies.radionetz.de/1a-oldies.mp3",
-    "group": "Oldies & Retro",
-    "country": "DE"
   }
 ]

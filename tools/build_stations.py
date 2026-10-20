@@ -49,7 +49,6 @@ GENRES = {
     "Latin":           (["latin", "salsa", "bachata"], 10, r"latin|salsa|bachata|merengue|reggaeton|cumbia|tropical|urbano"),
     "Classical":       (["classical", "opera"], 8, r"classic|baroque|opera|symphon|philharmon|chamber|piano|concert|orchestr"),
     "Ambient & Chill": (["ambient", "chillout", "lounge"], 10, r"ambient|chill|lounge|drone|space|relax|sleep|nature|calm"),
-    "Oldies & Retro":  (["oldies", "60s", "70s", "80s"], 10, r"oldie|\b(50s|60s|70s|80s|90s)\b|classic hits|gold|retro|vintage|nostalg"),
 }
 GROUP_ORDER = ["UK", "US", *GENRES]
 
@@ -59,7 +58,6 @@ SEEDS = {
     "Blues": ["Blues Radio", "BluesMen Channel", "Belly Up 4 Blues"],
     "Classical": ["Radio Swiss Classic", "WQXR", "Venice Classic Radio", "YourClassical"],
     "Soul & Funk": ["Soul Radio", "Funkstar Radio", "Solar Radio"],
-    "Oldies & Retro": ["Boom Radio", "Oldie Antenne", "Radio Caroline"],
 }
 
 # General/talk stations are only wanted from home: UK first, then a few from the US.
