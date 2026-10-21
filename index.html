@@ -165,11 +165,13 @@
       <div class="filters" id="filters" aria-label="Station groups"></div>
       <div class="station-list" id="station-list"></div>
       <p class="error" id="error" aria-live="polite"></p>
-      <p class="footer">Streams are supplied by their broadcasters. They may include broadcast advertising.</p>
+      <p class="footer">Streams are supplied by their broadcasters. They may include broadcast advertising. <span id="build"></span></p>
     </main>
   </div>
   <audio id="player" preload="none" x-webkit-airplay="allow"></audio>
   <script>
+    const BUILD = "2026-10-21d";
+    document.querySelector("#build").textContent = `· build ${BUILD}`;
     let stations = [];
     let stationsReady = null;
     function loadStations() {
