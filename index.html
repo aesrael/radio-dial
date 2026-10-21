@@ -250,9 +250,11 @@
       const groups = groupList();
       if (!box.dataset.built) {
         box.dataset.built = "1";
+        box.dataset.groups = groups.join("|");
         box.innerHTML = `<button class="chip" data-group="all"></button>`
           + groups.map((g) => `<button class="chip" data-group="${esc(g)}"></button>`).join("")
           + `<button class="chip" data-dead aria-pressed="false"></button>`
+          + `<button class="chip" id="refresh">Refresh list</button>`
           + `<button class="chip scan" id="scan">Check streams</button>`;
         box.addEventListener("click", (event) => {
           const chip = event.target.closest(".chip");
@@ -262,6 +264,7 @@
           render();
         });
         box.querySelector("#scan").addEventListener("click", scanStreams);
+        box.querySelector("#refresh").addEventListener("click", refreshStations);
       }
       const counts = {};
       stations.forEach((s) => { counts[groupOf(s)] = (counts[groupOf(s)] || 0) + 1; });
@@ -390,6 +393,72 @@
       error.textContent = offline
         ? `${offline} of ${urls.length} streams didn't respond — hidden from the dial.`
         : `All ${urls.length} streams responded.`;
+    }
+
+    // Swap in a fresh station list without disturbing the listener: playback of a
+    // surviving stream continues untouched, favourites/dead state is kept by
+    // name/URL, and only entries for vanished stations are pruned.
+    function applyStations(data) {
+      const prev = stations[current];
+      const prevUrl = prev?.url;
+      const prevName = prev?.name;
+      const liveUrl = (!player.paused && prevUrl) ? prevUrl : null;
+      stations = data;
+      stationsReady = Promise.resolve(stations);
+      const urls = new Set(stations.map((s) => s.url));
+      let pruned = false;
+      for (const url of Object.keys(dead)) {
+        if (!urls.has(url)) { delete dead[url]; pruned = true; }
+      }
+      if (pruned) saveDead();
+      const box = document.querySelector("#filters");
+      if (box?.dataset.groups !== groupList().join("|")) {
+        delete box.dataset.built;
+        box.innerHTML = "";
+      }
+      if (!groupList().includes(groupFilter)) groupFilter = "all";
+      let idx = stations.findIndex((s) => s.url === prevUrl);
+      if (idx === -1 && prevName) idx = stations.findIndex((s) => s.name === prevName);
+      if (idx === -1) idx = 0;
+      current = idx;
+      localStorage.setItem("radiodial_station", String(idx));
+      if (liveUrl && stations[idx].url !== liveUrl) {
+        tune(idx, true);   // our stream vanished — move on, keep the intent to play
+      } else if (player.paused && !player.src && !stations[idx].url.includes(".m3u8")) {
+        player.src = stations[idx].url;
+      }
+      if (view === "favourites" && !stations.some((s) => favs.includes(s.name))) {
+        view = "stations";
+        document.querySelectorAll(".nav button").forEach((item) => item.removeAttribute("aria-current"));
+        document.querySelector('[data-nav="stations"]')?.setAttribute("aria-current", "page");
+      }
+      render();
+    }
+
+    async function refreshStations() {
+      const button = document.querySelector("#refresh");
+      if (!button || button.disabled || scanning) return;
+      button.disabled = true;
+      button.textContent = "Refreshing…";
+      try {
+        const res = await fetch("stations.json?v=" + Date.now(), { cache: "no-store" });
+        if (!res.ok) throw new Error("bad status");
+        const data = await res.json();
+        if (!Array.isArray(data) || !data.length) throw new Error("bad list");
+        const known = new Set(stations.map((s) => s.url));
+        const added = data.filter((s) => s?.url && !known.has(s.url)).length;
+        const gone = stations.filter((s) => !data.some((n) => n?.url === s.url)).length;
+        applyStations(data);
+        status.textContent = `List refreshed — ${data.length} stations`
+          + (added || gone ? ` (${added} new, ${gone} gone).` : ", nothing new.");
+        error.textContent = "";
+      } catch {
+        error.textContent = "Couldn't refresh the list — check your connection.";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Refresh list";
+        render();
+      }
     }
 
     let metaAbortController = null;
@@ -766,7 +835,7 @@
     loadStations().then(() => {
       const saved = parseInt(localStorage.getItem("radiodial_station") || "0", 10);
       current = Number.isFinite(saved) && saved >= 0 && saved < stations.length ? saved : 0;
-      if (favs.length > 0) {
+      if (favs.length > 0 && stations.some((s) => favs.includes(s.name))) {
         view = "favourites";
         document.querySelectorAll(".nav button").forEach((item) => item.removeAttribute("aria-current"));
         document.querySelector('[data-nav="favourites"]')?.setAttribute("aria-current", "page");
