@@ -40,9 +40,10 @@ at the top of the script.
 
 ### Dead streams
 
-Streams die. The app remembers: when a station fails it's marked offline for a week,
+Streams die. The app remembers: when a station fails it's retried twice on the spot
+(transient mobile blips usually recover), then marked offline for a week,
 skipped by the arrows, and hidden from the lists (toggle **Show offline** to see or retry
-it). **Check streams** probes every URL once and hides the ones that don't answer.
+it). Interruptions (calls, notifications, Bluetooth handoffs) auto-resume. **Check streams** probes every URL once and hides the ones that don't answer.
 `stations.json` is the source of truth — if a lot go red, regenerate it.
 
 ### Controls

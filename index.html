@@ -282,10 +282,54 @@
       if (!pool.length) return;
       const pos = pool.indexOf(current);
       const next = pos === -1 ? pool[0] : pool[(pos + direction + pool.length) % pool.length];
-      tune(next, forcePlay === undefined ? !player.paused : forcePlay);
+      tune(next, forcePlay === undefined ? wantPlaying : forcePlay);
     }
 
     let skipBudget = 0;
+    let wantPlaying = false;   // user intends audio: set on play, cleared only on user pause
+    let resumeTimer = null;    // delayed resume after an unexpected pause
+    let retryTimer = null;     // delayed re-tune of the same station after a drop
+    let failCount = 0;         // consecutive failures for the current station
+    function userPause() {
+      wantPlaying = false;
+      clearTimeout(resumeTimer);
+      clearTimeout(retryTimer);
+      retryTimer = null;
+      isBuffering = false;
+      player.pause();
+    }
+    async function tryResume() {
+      if (!wantPlaying || !player.paused) return;
+      try {
+        await player.play();
+        error.textContent = "";
+        fetchMetadata(current);
+      } catch {
+        status.textContent = `Paused — tap Play to resume ${stations[current].name}.`;
+        render();
+      }
+    }
+    // A failed stream is retried twice on the same station (transient blips are
+    // common on mobile) before it's marked dead and the dial moves on.
+    function streamFailed(message) {
+      if (!wantPlaying || failCount >= 2) {
+        failCount = 0;
+        if (!wantPlaying) {
+          isBuffering = false;
+          error.textContent = message;
+          render();
+        } else {
+          failStation(message);
+        }
+        return;
+      }
+      failCount += 1;
+      isBuffering = true;
+      status.textContent = `Signal dropped — retrying ${stations[current].name}…`;
+      render();
+      clearTimeout(retryTimer);
+      retryTimer = setTimeout(() => { retryTimer = null; tune(current, true, true); }, failCount === 1 ? 2000 : 5000);
+    }
     function failStation(message) {
       const station = stations[current];
       markDead(station);
@@ -293,6 +337,7 @@
       error.textContent = message;
       if (skipBudget < 4) {
         skipBudget += 1;
+        status.textContent = `Skipping to the next station…`;
         setTimeout(() => { if (stations[current] === station) tuneStep(1, true); }, 1200);
       } else {
         skipBudget = 0;
@@ -386,10 +431,10 @@
           ]
         });
         navigator.mediaSession.setActionHandler("play", () => start());
-        navigator.mediaSession.setActionHandler("pause", () => player.pause());
+        navigator.mediaSession.setActionHandler("pause", () => userPause());
         navigator.mediaSession.setActionHandler("previoustrack", () => tune(current - 1));
         navigator.mediaSession.setActionHandler("nexttrack", () => tune(current + 1));
-        navigator.mediaSession.setActionHandler("stop", () => player.pause());
+        navigator.mediaSession.setActionHandler("stop", () => userPause());
       }
     }
 
@@ -510,7 +555,11 @@
       }).join("");
     }
 
-    async function tune(index, shouldPlay = !player.paused) {
+    async function tune(index, shouldPlay = !player.paused, isRetry = false) {
+      if (!isRetry) failCount = 0;
+      clearTimeout(resumeTimer);
+      clearTimeout(retryTimer);
+      retryTimer = null;
       current = (index + stations.length) % stations.length;
       localStorage.setItem("radiodial_station", current.toString());
       const station = stations[current];
@@ -527,7 +576,7 @@
           hls = new Hls({ maxBufferLength: 30 });
           hls.on(Hls.Events.ERROR, (_, data) => {
             if (data.fatal && current === index) {
-              failStation(`Could not load ${station.name}'s stream.`);
+              streamFailed(`Could not load ${station.name}'s stream.`);
             }
           });
           hls.loadSource(station.url);
@@ -560,6 +609,7 @@
     }
 
     async function start() {
+      wantPlaying = true;
       try {
         isBuffering = true;
         status.textContent = `Buffering ${stations[current].name}…`;
@@ -569,7 +619,13 @@
         fetchMetadata(current);
       } catch {
         isBuffering = false;
-        error.textContent = "Your browser blocked autoplay. Press Play to start the stream.";
+        if (retryTimer) {
+          // A retry is already scheduled — stay wanting; the re-tune will restart us.
+          wantPlaying = true;
+        } else {
+          wantPlaying = false;
+          error.textContent = "Your browser blocked autoplay. Press Play to start the stream.";
+        }
         render();
       }
     }
@@ -579,8 +635,7 @@
         if (!player.src && !hls) tune(current, true);
         else start();
       } else {
-        isBuffering = false;
-        player.pause();
+        userPause();
       }
     });
 
@@ -601,6 +656,7 @@
     player.addEventListener("playing", () => {
       isBuffering = false;
       skipBudget = 0;
+      failCount = 0;
       markLive(stations[current]);
       status.textContent = `Listening live to ${stations[current].name}.`;
       render();
@@ -616,13 +672,27 @@
 
     player.addEventListener("pause", () => {
       isBuffering = false;
-      if (player.src) status.textContent = `Paused — press Play to resume ${stations[current].name}.`;
-      render();
+      if (retryTimer) {
+        // Mid-retry: the re-tune owns recovery, don't fight it.
+        status.textContent = `Signal dropped — retrying ${stations[current].name}…`;
+        render();
+      } else if (wantPlaying && player.src) {
+        // Unexpected pause (call, notification, Bluetooth, OS) — come back on our own.
+        status.textContent = `Reconnecting to ${stations[current].name}…`;
+        render();
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(tryResume, 800);
+      } else if (player.src) {
+        status.textContent = `Paused — press Play to resume ${stations[current].name}.`;
+        render();
+      } else {
+        render();
+      }
     });
 
     player.addEventListener("error", () => {
       if (!player.error) return;
-      failStation(`Could not load ${stations[current].name}'s stream.`);
+      streamFailed(`Could not load ${stations[current].name}'s stream.`);
     });
 
     document.querySelector("#previous").addEventListener("click", () => { skipBudget = 0; tuneStep(-1); });
@@ -683,9 +753,14 @@
     document.addEventListener("keydown", event => {
       if (event.key === "ArrowDown" || event.key === "ArrowRight") { event.preventDefault(); skipBudget = 0; tuneStep(1); }
       if (event.key === "ArrowUp" || event.key === "ArrowLeft") { event.preventDefault(); skipBudget = 0; tuneStep(-1); }
-      if (event.code === "Space" && !event.target.matches("button, input")) { event.preventDefault(); player.paused ? start() : player.pause(); }
+      if (event.code === "Space" && !event.target.matches("button, input")) { event.preventDefault(); player.paused ? start() : userPause(); }
       if (event.key.toLowerCase() === "m") { player.muted = !player.muted; render(); }
       if (event.key.toLowerCase() === "t") { toggleTheme(); }
+    });
+
+    // Coming back to the tab after an interruption — pick up where we left off.
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) tryResume();
     });
 
     loadStations().then(() => {
