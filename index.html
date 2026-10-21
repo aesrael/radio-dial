@@ -170,7 +170,7 @@
   </div>
   <audio id="player" preload="none" x-webkit-airplay="allow"></audio>
   <script>
-    const BUILD = "2026-10-21d";
+    const BUILD = "2026-10-21e";
     document.querySelector("#build").textContent = `· build ${BUILD}`;
     let stations = [];
     let stationsReady = null;
@@ -834,8 +834,26 @@
       if (!document.hidden) {
         tryResume();
         if (!player.paused && stations.length) fetchMetadata(current);
+        checkForUpdate();
       }
     });
+
+    // The installed app keeps running whatever build it launched with. If the
+    // site has moved on, say so — relaunching picks it up, favourites intact.
+    let lastVersionCheck = 0;
+    async function checkForUpdate() {
+      const now = Date.now();
+      if (now - lastVersionCheck < 3600 * 1000) return;
+      lastVersionCheck = now;
+      try {
+        const res = await fetch("index.html?v=" + now, { cache: "no-store" });
+        if (!res.ok) return;
+        const match = (await res.text()).match(/const BUILD = "([^"]+)"/);
+        if (match && match[1] !== BUILD) {
+          error.textContent = `Version ${match[1]} is out — relaunch the app to pick it up. Your favourites are kept.`;
+        }
+      } catch { /* offline — try again next time */ }
+    }
 
     loadStations().then(() => {
       const saved = parseInt(localStorage.getItem("radiodial_station") || "0", 10);
