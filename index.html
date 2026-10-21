@@ -170,7 +170,7 @@
   </div>
   <audio id="player" preload="none" x-webkit-airplay="allow"></audio>
   <script>
-    const BUILD = "2026-10-21e";
+    const BUILD = "2026-10-21f";
     document.querySelector("#build").textContent = `· build ${BUILD}`;
     let stations = [];
     let stationsReady = null;
@@ -295,6 +295,16 @@
     let resumeTimer = null;    // delayed resume after an unexpected pause
     let retryTimer = null;     // delayed re-tune of the same station after a drop
     let failCount = 0;         // consecutive failures for the current station
+    let resumeAttempts = 0;
+    // Ring buffer of recent media events — shown under Signals, so a background
+    // death can be diagnosed from the phone itself.
+    const siglog = [];
+    function sig(event, detail = "") {
+      const t = new Date();
+      const clock = `${String(t.getHours()).padStart(2, "0")}:${String(t.getMinutes()).padStart(2, "0")}:${String(t.getSeconds()).padStart(2, "0")}`;
+      siglog.push(`${clock} ${event}${detail ? " " + detail : ""}${document.hidden ? " (hidden)" : ""}`);
+      if (siglog.length > 12) siglog.shift();
+    }
     function userPause() {
       wantPlaying = false;
       clearTimeout(resumeTimer);
@@ -304,13 +314,23 @@
       player.pause();
     }
     async function tryResume() {
-      if (!wantPlaying || !player.paused) return;
+      if (!wantPlaying || !player.paused) { resumeAttempts = 0; return; }
+      resumeAttempts += 1;
       try {
         await player.play();
+        resumeAttempts = 0;
         error.textContent = "";
         fetchMetadata(current);
       } catch {
-        status.textContent = `Paused — tap Play to resume ${stations[current].name}.`;
+        // Backgrounded pages may refuse audio starts — back off and try again.
+        if (resumeAttempts < 4) {
+          clearTimeout(resumeTimer);
+          resumeTimer = setTimeout(tryResume, resumeAttempts === 1 ? 3000 : 10000);
+          status.textContent = `Reconnecting to ${stations[current].name}…`;
+        } else {
+          resumeAttempts = 0;
+          status.textContent = `Paused — tap Play to resume ${stations[current].name}.`;
+        }
         render();
       }
     }
@@ -329,6 +349,7 @@
         return;
       }
       failCount += 1;
+      sig("retry", `#${failCount} ${stations[current].name}`);
       isBuffering = true;
       status.textContent = `Signal dropped — retrying ${stations[current].name}…`;
       render();
@@ -337,6 +358,7 @@
     }
     function failStation(message) {
       const station = stations[current];
+      sig("dead-skip", station.name);
       markDead(station);
       isBuffering = false;
       error.textContent = message;
@@ -719,15 +741,22 @@
     });
 
     player.addEventListener("waiting", () => {
+      sig("waiting");
       isBuffering = true;
       status.textContent = `Buffering ${stations[current].name}…`;
       render();
     });
 
+    player.addEventListener("stalled", () => {
+      sig("stalled");
+    });
+
     player.addEventListener("playing", () => {
+      sig("playing");
       isBuffering = false;
       skipBudget = 0;
       failCount = 0;
+      resumeAttempts = 0;
       markLive(stations[current]);
       status.textContent = `Listening live to ${stations[current].name}.`;
       render();
@@ -742,6 +771,7 @@
     });
 
     player.addEventListener("pause", () => {
+      sig("pause", `want=${wantPlaying}`);
       isBuffering = false;
       if (retryTimer) {
         // Mid-retry: the re-tune owns recovery, don't fight it.
@@ -763,6 +793,7 @@
 
     player.addEventListener("error", () => {
       if (!player.error) return;
+      sig("error", `code=${player.error.code}`);
       streamFailed(`Could not load ${stations[current].name}'s stream.`);
     });
 
@@ -814,6 +845,7 @@
         favourites: "<strong>Favourites.</strong><br>Tap ☆ on any station to pin it here. Saved in this browser.",
         about: "<strong>Radio Dial.</strong><br>A tiny direct-stream player. No accounts, no feed of articles.",
         signals: "<strong>Signals.</strong><br>Red dot means the selected station is live. Playback failures appear below the dial."
+          + (siglog.length ? `<br><br>${siglog.slice().reverse().join("<br>")}` : "<br><br>No events yet — play something first."),
       };
       tip.innerHTML = messages[button.dataset.nav] || "";
       view = button.dataset.nav === "favourites" ? "favourites" : "stations";
