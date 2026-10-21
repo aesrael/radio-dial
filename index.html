@@ -537,7 +537,7 @@
           let buffer = new Uint8Array(0);
           const decoder = new TextDecoder();
 
-          while (!controller.signal.aborted) {
+          while (!controller.signal.aborted && !document.hidden) {
             const { value, done } = await reader.read();
             if (done) break;
             const newBuf = new Uint8Array(buffer.length + value.length);
@@ -642,7 +642,7 @@
         render();
         const mode = await ensureHls();
         if (mode === true) {
-          hls = new Hls({ maxBufferLength: 30 });
+          hls = new Hls({ maxBufferLength: 90 });   // deep buffer: survives background timer throttling
           hls.on(Hls.Events.ERROR, (_, data) => {
             if (data.fatal && current === index) {
               streamFailed(`Could not load ${station.name}'s stream.`);
@@ -829,7 +829,10 @@
 
     // Coming back to the tab after an interruption — pick up where we left off.
     document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) tryResume();
+      if (!document.hidden) {
+        tryResume();
+        if (!player.paused && stations.length) fetchMetadata(current);
+      }
     });
 
     loadStations().then(() => {
@@ -846,7 +849,7 @@
       error.textContent = "Couldn't load stations.json — serve this folder over http (python3 -m http.server).";
     });
     setInterval(() => {
-      if (!player.paused && stations.length) fetchMetadata(current);
+      if (!player.paused && !document.hidden && stations.length) fetchMetadata(current);
     }, 30000);
   </script>
 </body>
