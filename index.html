@@ -84,6 +84,7 @@
     .station span { margin-top:4px; font-size:12px; opacity:0.8; }
     .station i { position:absolute; right:14px; bottom:12px; width:11px; height:11px; border-radius:50%; background:var(--blue); border:1px solid var(--line); }
     .station .fstar { position:absolute; top:8px; right:12px; font-size:18px; cursor:pointer; color:var(--ink); }
+    .station .sh { position:absolute; top:10px; right:38px; font-size:15px; cursor:pointer; color:var(--ink); opacity:.65; }
     .station[aria-pressed="true"] i { background:#e54555; }
     .group-head { grid-column:1/-1; margin:10px 0 -2px; font-size:12px; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); display:flex; gap:8px; align-items:center; }
     .group-head span { font-size:11px; letter-spacing:0; border:1px solid var(--line); border-radius:99px; padding:1px 7px; color:var(--ink); }
@@ -170,7 +171,7 @@
   </div>
   <audio id="player" preload="none" x-webkit-airplay="allow"></audio>
   <script>
-    const BUILD = "2026-10-21g";
+    const BUILD = "2026-10-21h";
     document.querySelector("#build").textContent = `· build ${BUILD}`;
     let stations = [];
     let stationsReady = null;
@@ -219,6 +220,23 @@
       saveFavs();
       render();
     }
+    async function shareStation(station) {
+      const text = `${station.name} — live radio via Radio Dial`;
+      if (navigator.share) {
+        try { await navigator.share({ title: station.name, text, url: station.url }); }
+        catch { /* dismissed — nothing to do */ }
+      } else if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(`${text}\n${station.url}`);
+          status.textContent = `Link to ${station.name} copied — paste it anywhere.`;
+          render();
+        } catch {
+          error.textContent = "Couldn't copy the link in this browser.";
+        }
+      } else {
+        error.textContent = "Sharing isn't supported in this browser.";
+      }
+    }
 
     // ---- groups, filters and dead-stream memory --------------------------
     let groupFilter = "all";
@@ -260,9 +278,18 @@
           + `<button class="chip scan" id="scan">Check streams</button>`;
         box.addEventListener("click", (event) => {
           const chip = event.target.closest(".chip");
-          if (!chip || chip.id === "scan") return;
-          if ("dead" in chip.dataset) showDead = !showDead;
-          else groupFilter = chip.dataset.group;
+          if (!chip || chip.id === "scan" || chip.id === "refresh") return;
+          if ("dead" in chip.dataset) {
+            showDead = !showDead;
+          } else {
+            groupFilter = chip.dataset.group;
+            if (groupFilter === "all" && view !== "stations") {
+              // "All" means the whole dial, not all-of-this-view.
+              view = "stations";
+              document.querySelectorAll(".nav button").forEach((item) => item.removeAttribute("aria-current"));
+              document.querySelector('[data-nav="stations"]')?.setAttribute("aria-current", "page");
+            }
+          }
           render();
         });
         box.querySelector("#scan").addEventListener("click", scanStreams);
@@ -651,7 +678,7 @@
         const cards = rows.map((index) => {
           const item = stations[index];
           const offline = isDead(item.url);
-          return `<button class="station${offline ? " dead" : ""}" aria-pressed="${index === current}" data-index="${index}"><span class="fstar" data-fav="${index}" role="button" aria-label="favourite ${esc(item.name)}">${favs.includes(item.name) ? "★" : "☆"}</span><b>${esc(item.name)}</b><span>${esc(item.description)}</span>${offline ? '<em class="dead-badge">offline</em>' : "<i></i>"}</button>`;
+          return `<button class="station${offline ? " dead" : ""}" aria-pressed="${index === current}" data-index="${index}"><span class="fstar" data-fav="${index}" role="button" aria-label="favourite ${esc(item.name)}">${favs.includes(item.name) ? "★" : "☆"}</span><span class="sh" data-share="${index}" role="button" aria-label="share ${esc(item.name)}">↗</span><b>${esc(item.name)}</b><span>${esc(item.description)}</span>${offline ? '<em class="dead-badge">offline</em>' : "<i></i>"}</button>`;
         }).join("");
         return `<h3 class="group-head">${esc(group)}<span>${rows.length}</span></h3>${cards}`;
       }).join("");
@@ -843,6 +870,8 @@
       player.remote.onconnect = () => { if (player.paused) start(); };
     }
     list.addEventListener("click", event => {
+      const share = event.target.closest("[data-share]");
+      if (share) { shareStation(stations[Number(share.dataset.share)]); return; }
       const star = event.target.closest("[data-fav]");
       if (star) { toggleFav(stations[Number(star.dataset.fav)].name); return; }
       const button = event.target.closest(".station");
