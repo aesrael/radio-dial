@@ -182,6 +182,8 @@ def fetch_tag(tag: str, limit: int):
 SEARCH = "https://de1.api.radio-browser.info/json/stations/search"
 VIDEO_NAME = re.compile(r"\b(HD|FHD|UHD|720p?|1080p?|4K|TV)\b", re.I)
 
+IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif")
+
 
 def search_name(name: str, country: str | None = None, limit: int = 25):
     """Whole-database name search — the country listing is capped and misses stations."""
@@ -200,6 +202,43 @@ def search_name(name: str, country: str | None = None, limit: int = 25):
 
 def looks_like_video(name: str) -> bool:
     return bool(VIDEO_NAME.search(name))
+
+
+def logo_ok(url: str) -> bool:
+    """Hotlinkable from our https page: https + a renderable image format."""
+    if not url or not url.startswith("https://"):
+        return False
+    path = urllib.parse.urlparse(url).path.lower()
+    if path.endswith(IMAGE_EXTS):
+        return True
+    if "." not in path.rsplit("/", 1)[-1]:
+        return logo_is_image(url)   # extensionless image URLs (firebase, CDNs)
+    return False
+
+
+def logo_is_image(url: str) -> bool:
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": UA}, method="HEAD")
+        with urllib.request.urlopen(req, timeout=10) as res:
+            return (res.headers.get("Content-Type") or "").lower().startswith("image/")
+    except Exception:
+        return False
+
+
+def resolve_logo(name: str, url: str) -> str | None:
+    """radio-browser favicon for this exact stream URL, or None. Name matches
+    are never trusted — Capital UK must not get an Italian station's logo."""
+    for row in search_name(name, None):
+        if norm_key(row.get("url_resolved") or "") != norm_key(url):
+            continue
+        favicon = (row.get("favicon") or "").strip()
+        if logo_ok(favicon):
+            return favicon
+        if favicon.startswith("http://"):
+            upgraded = "https://" + favicon[len("http://"):]
+            if logo_is_image(upgraded):
+                return upgraded
+    return None
 
 
 def rank(station: dict) -> tuple:
@@ -224,7 +263,8 @@ def probe(url: str, timeout: int = 8) -> tuple[bool, str]:
         return False, type(exc).__name__
 
 
-def build(limit_uk: int, per_genre: int, do_probe: bool, workers: int):
+def build(limit_uk: int, per_genre: int, do_probe: bool, workers: int,
+          do_logos: bool = True):
     pinned = json.loads(PINNED.read_text())
     used_urls = {norm_key(s["url"]) for s in pinned}
     used_names = {name_key(s["name"]) for s in pinned}
@@ -336,6 +376,17 @@ def build(limit_uk: int, per_genre: int, do_probe: bool, workers: int):
         rows = [(r, e) for r, _, e in proposals[group] if verdicts.get(e["url"])]
         rows.sort(key=lambda pair: pair[0])
         kept.extend(entry for _, entry in rows[:caps[group]])
+
+    if do_logos:
+        targets = [(s["name"], s["url"], s) for s in pinned + kept]
+        print(f"resolving logos for {len(targets)} stations...")
+        found = 0
+        for name, url, entry in targets:
+            logo = resolve_logo(name, url)
+            if logo:
+                entry["logo"] = logo
+                found += 1
+        print(f"  logos: {found}/{len(targets)}")
     return pinned, kept
 
 
@@ -354,11 +405,12 @@ def main():
     parser.add_argument("--per-genre", type=int, default=99,
                         help="cap per genre (default: the tuned cap in GENRES)")
     parser.add_argument("--no-probe", action="store_true")
+    parser.add_argument("--no-logos", action="store_true")
     parser.add_argument("--workers", type=int, default=24)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    pinned, kept = build(args.limit_uk, args.per_genre, not args.no_probe, args.workers)
+    pinned, kept = build(args.limit_uk, args.per_genre, not args.no_probe, args.workers, not args.no_logos)
     groups: dict[str, int] = {}
     for station in pinned + kept:
         groups[station["group"]] = groups.get(station["group"], 0) + 1
