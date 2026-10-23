@@ -171,7 +171,7 @@
   </div>
   <audio id="player" preload="none" x-webkit-airplay="allow"></audio>
   <script>
-    const BUILD = "2026-10-21h";
+    const BUILD = "2026-10-21i";
     document.querySelector("#build").textContent = `· build ${BUILD}`;
     let stations = [];
     let stationsReady = null;
@@ -221,14 +221,15 @@
       render();
     }
     async function shareStation(station) {
-      const text = `${station.name} — live radio via Radio Dial`;
+      const link = `${location.origin}${location.pathname}#play=${encodeURIComponent(station.url)}&name=${encodeURIComponent(station.name)}`;
+      const text = `${station.name} — live on Radio Dial`;
       if (navigator.share) {
-        try { await navigator.share({ title: station.name, text, url: station.url }); }
+        try { await navigator.share({ title: station.name, text, url: link }); }
         catch { /* dismissed — nothing to do */ }
       } else if (navigator.clipboard?.writeText) {
         try {
-          await navigator.clipboard.writeText(`${text}\n${station.url}`);
-          status.textContent = `Link to ${station.name} copied — paste it anywhere.`;
+          await navigator.clipboard.writeText(`${text}\n${link}`);
+          status.textContent = `Link to ${station.name} copied — it opens dialed straight to the station.`;
           render();
         } catch {
           error.textContent = "Couldn't copy the link in this browser.";
@@ -645,7 +646,7 @@
       renderFilters();
       const station = stations[current];
       const frequency = document.querySelector("#frequency");
-      frequency.innerHTML = station.code.replace(" ", "<br>");
+      frequency.innerHTML = esc(station.code).replace(" ", "<br>");
       frequency.classList.toggle("long", station.code.replace(/ /g, "").length > 5);
       document.querySelector("#station-name").textContent = station.name;
       renderTrack();
@@ -931,6 +932,28 @@
     }
 
     loadStations().then(() => {
+      // Deep link (#play=<stream-url>&name=...) — open dialed to that station.
+      const shared = new URLSearchParams(location.hash.slice(1)).get("play");
+      if (shared) {
+        let idx = stations.findIndex((s) => s.url === shared);
+        if (idx === -1) {
+          const rawName = new URLSearchParams(location.hash.slice(1)).get("name") || "Shared station";
+          const sharedName = rawName.slice(0, 60);
+          stations.unshift({
+            name: sharedName,
+            code: sharedName.slice(0, 16),
+            description: "Shared via a Radio Dial link.",
+            url: shared,
+            group: "Shared",
+          });
+          idx = 0;
+        }
+        current = idx;
+        localStorage.setItem("radiodial_station", String(idx));
+        render();
+        tune(idx, true);
+        return;
+      }
       const saved = parseInt(localStorage.getItem("radiodial_station") || "0", 10);
       current = Number.isFinite(saved) && saved >= 0 && saved < stations.length ? saved : 0;
       if (favs.length > 0 && stations.some((s) => favs.includes(s.name))) {
