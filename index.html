@@ -170,7 +170,7 @@
   </div>
   <audio id="player" preload="none" x-webkit-airplay="allow"></audio>
   <script>
-    const BUILD = "2026-10-21f";
+    const BUILD = "2026-10-21g";
     document.querySelector("#build").textContent = `· build ${BUILD}`;
     let stations = [];
     let stationsReady = null;
@@ -391,6 +391,7 @@
       scanning = true;
       const button = document.querySelector("#scan");
       const urls = [...new Set(stations.map((s) => s.url))];
+      const deadBefore = { ...dead };
       const queue = urls.slice();
       let done = 0;
       let offline = 0;
@@ -409,14 +410,22 @@
         }
       };
       await Promise.all(Array.from({ length: 5 }, worker));
-      saveDead();
+      if (urls.length && offline / urls.length > 0.8) {
+        // Nearly everything failed — that's the network, not the stations.
+        // Restore pre-scan state instead of hiding the whole dial.
+        dead = deadBefore;
+        saveDead();
+        error.textContent = "Network looks down — nothing hidden. Try Check streams again on Wi-Fi.";
+      } else {
+        saveDead();
+        error.textContent = offline
+          ? `${offline} of ${urls.length} streams didn't respond — hidden from the dial.`
+          : `All ${urls.length} streams responded.`;
+      }
       scanning = false;
       button.disabled = false;
       button.textContent = "Check streams";
       render();
-      error.textContent = offline
-        ? `${offline} of ${urls.length} streams didn't respond — hidden from the dial.`
-        : `All ${urls.length} streams responded.`;
     }
 
     // Swap in a fresh station list without disturbing the listener: playback of a
@@ -715,6 +724,11 @@
         if (retryTimer) {
           // A retry is already scheduled — stay wanting; the re-tune will restart us.
           wantPlaying = true;
+        } else if (document.hidden) {
+          // Starts refused in background must not clear intent — returning
+          // to the app retries via the visibility handler.
+          wantPlaying = true;
+          status.textContent = `Will resume ${stations[current].name} when you return…`;
         } else {
           wantPlaying = false;
           error.textContent = "Your browser blocked autoplay. Press Play to start the stream.";
