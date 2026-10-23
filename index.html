@@ -58,6 +58,7 @@
     .now-playing { margin:35px 0 28px; padding:26px; display:grid; grid-template-columns:110px 1fr auto; gap:22px; align-items:center; border:3px solid var(--line); border-radius:23px; background:var(--pink); box-shadow:6px 6px 0 var(--line); transform:rotate(-.35deg); color:#282529; }
     .frequency { width:110px; height:110px; border:3px solid var(--line); border-radius:50%; display:grid; place-items:center; background:var(--yellow); font:900 27px/1 Georgia,serif; text-align:center; box-shadow:inset 0 0 0 8px rgba(255,255,255,0.4); overflow:hidden; }
     .frequency.long { font-size:14px; line-height:1.1; padding:14px; overflow-wrap:anywhere; }
+    .frequency img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
     .eyebrow { font-size:12px; font-weight:bold; letter-spacing:1.6px; text-transform:uppercase; opacity:0.85; }
     #station-name { margin:6px 0 4px; font-size:34px; letter-spacing:-1px; }
     #station-description { margin:0; font-size:15px; min-height:22px; }
@@ -85,6 +86,8 @@
     .station i { position:absolute; right:14px; bottom:12px; width:11px; height:11px; border-radius:50%; background:var(--blue); border:1px solid var(--line); }
     .station .fstar { position:absolute; top:8px; right:12px; font-size:18px; cursor:pointer; color:var(--ink); }
     .station .sh { position:absolute; top:10px; right:38px; font-size:15px; cursor:pointer; color:var(--ink); opacity:.65; }
+    .station .art { position:absolute; left:14px; top:14px; width:44px; height:44px; border-radius:12px; border:2px solid var(--line); object-fit:cover; background:var(--yellow); }
+    .station.has-art { padding-left:70px; }
     .station[aria-pressed="true"] i { background:#e54555; }
     .group-head { grid-column:1/-1; margin:10px 0 -2px; font-size:12px; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); display:flex; gap:8px; align-items:center; }
     .group-head span { font-size:11px; letter-spacing:0; border:1px solid var(--line); border-radius:99px; padding:1px 7px; color:var(--ink); }
@@ -171,7 +174,7 @@
   </div>
   <audio id="player" preload="none" x-webkit-airplay="allow"></audio>
   <script>
-    const BUILD = "2026-10-21i";
+    const BUILD = "2026-10-23a";
     document.querySelector("#build").textContent = `· build ${BUILD}`;
     let stations = [];
     let stationsReady = null;
@@ -549,16 +552,19 @@
 
     function updateMediaSession(station, trackTitle) {
       if ("mediaSession" in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: trackTitle || station.name,
-          artist: trackTitle ? station.name : (station.description || "Live UK Radio"),
-          album: "Radio Dial",
-          artwork: [
+        const artwork = station.logo
+          ? [{ src: station.logo, sizes: "512x512" }]
+          : [
             { src: "favicon.svg", sizes: "96x96", type: "image/svg+xml" },
             { src: "favicon.svg", sizes: "128x128", type: "image/svg+xml" },
             { src: "favicon.svg", sizes: "192x192", type: "image/svg+xml" },
             { src: "favicon.svg", sizes: "512x512", type: "image/svg+xml" }
-          ]
+          ];
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: trackTitle || station.name,
+          artist: trackTitle ? station.name : (station.description || "Live UK Radio"),
+          album: "Radio Dial",
+          artwork
         });
         navigator.mediaSession.setActionHandler("play", () => start());
         navigator.mediaSession.setActionHandler("pause", () => userPause());
@@ -646,7 +652,12 @@
       renderFilters();
       const station = stations[current];
       const frequency = document.querySelector("#frequency");
-      frequency.innerHTML = esc(station.code).replace(" ", "<br>");
+      if (station.logo) {
+        const codeHtml = esc(station.code).replace(" ", "<br>");
+        frequency.innerHTML = `<img src="${esc(station.logo)}" alt="" loading="lazy" data-code="${codeHtml}" onerror="this.outerHTML=this.dataset.code">`;
+      } else {
+        frequency.innerHTML = esc(station.code).replace(" ", "<br>");
+      }
       frequency.classList.toggle("long", station.code.replace(/ /g, "").length > 5);
       document.querySelector("#station-name").textContent = station.name;
       renderTrack();
@@ -679,7 +690,10 @@
         const cards = rows.map((index) => {
           const item = stations[index];
           const offline = isDead(item.url);
-          return `<button class="station${offline ? " dead" : ""}" aria-pressed="${index === current}" data-index="${index}"><span class="fstar" data-fav="${index}" role="button" aria-label="favourite ${esc(item.name)}">${favs.includes(item.name) ? "★" : "☆"}</span><span class="sh" data-share="${index}" role="button" aria-label="share ${esc(item.name)}">↗</span><b>${esc(item.name)}</b><span>${esc(item.description)}</span>${offline ? '<em class="dead-badge">offline</em>' : "<i></i>"}</button>`;
+          const art = item.logo
+            ? `<img class="art" src="${esc(item.logo)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('has-art');this.remove()">`
+            : "";
+          return `<button class="station${offline ? " dead" : ""}${art ? " has-art" : ""}" aria-pressed="${index === current}" data-index="${index}">${art}<span class="fstar" data-fav="${index}" role="button" aria-label="favourite ${esc(item.name)}">${favs.includes(item.name) ? "★" : "☆"}</span><span class="sh" data-share="${index}" role="button" aria-label="share ${esc(item.name)}">↗</span><b>${esc(item.name)}</b><span>${esc(item.description)}</span>${offline ? '<em class="dead-badge">offline</em>' : "<i></i>"}</button>`;
         }).join("");
         return `<h3 class="group-head">${esc(group)}<span>${rows.length}</span></h3>${cards}`;
       }).join("");
