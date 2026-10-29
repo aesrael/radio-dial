@@ -98,6 +98,10 @@
     .chip { padding:6px 11px; border:2px solid var(--line); border-radius:99px; background:var(--card-bg); font-size:12px; font-weight:bold; cursor:pointer; }
     .chip[aria-pressed="true"] { background:var(--yellow); color:#282529; box-shadow:2px 2px 0 var(--line); }
     .chip.scan { margin-left:auto; }
+    .search { margin:0 0 10px; }
+    .search input { width:100%; padding:10px 16px; border:2px solid var(--line); border-radius:99px; background:var(--card-bg); color:var(--ink); font:inherit; font-size:14px; outline:none; }
+    .search input:focus { box-shadow:3px 3px 0 var(--line); }
+    .search input::placeholder { color:var(--muted); }
     .chip[disabled] { opacity:.6; cursor:progress; }
     .station-list:empty::after { content:"Nothing here — clear the filter or switch view."; grid-column:1/-1; font-size:13px; color:var(--muted); }
     .error { margin:14px 0 0; color:#e54555; font-size:13px; font-weight:bold; min-height:18px; }
@@ -165,7 +169,8 @@
           </div>
         </div>
       </section>
-      <div class="section-title"><h2>On the dial</h2><span class="keys"><kbd>Up</kbd> <kbd>Down</kbd> tune, <kbd>Space</kbd> play, <kbd>M</kbd> mute, <kbd>T</kbd> theme</span></div>
+      <div class="section-title"><h2>On the dial</h2><span class="keys"><kbd>Up</kbd> <kbd>Down</kbd> tune, <kbd>Space</kbd> play, <kbd>M</kbd> mute, <kbd>T</kbd> theme, <kbd>/</kbd> search</span></div>
+      <div class="search"><input type="search" id="q" placeholder="Search stations…" aria-label="Search stations" autocomplete="off"></div>
       <div class="filters" id="filters" aria-label="Station groups"></div>
       <div class="station-list" id="station-list"></div>
       <p class="error" id="error" aria-live="polite"></p>
@@ -174,7 +179,7 @@
   </div>
   <audio id="player" preload="none" x-webkit-airplay="allow"></audio>
   <script>
-    const BUILD = "2026-10-23a";
+    const BUILD = "2026-10-29a";
     document.querySelector("#build").textContent = `· build ${BUILD}`;
     let stations = [];
     let stationsReady = null;
@@ -245,6 +250,7 @@
     // ---- groups, filters and dead-stream memory --------------------------
     let groupFilter = "all";
     let showDead = false;
+    let query = "";
     let scanning = false;
     let dead = {};
     try { dead = JSON.parse(localStorage.getItem("radiodial_dead") || "{}"); } catch { dead = {}; }
@@ -265,9 +271,35 @@
         if (view === "favourites" && !favs.includes(s.name)) return false;
         if (groupFilter !== "all" && groupOf(s) !== groupFilter) return false;
         if (!showDead && isDead(s.url)) return false;
+        if (query && !((s.name + " " + (s.description || "")).toLowerCase().includes(query))) return false;
         return true;
       });
     }
+
+    const searchBox = document.querySelector("#q");
+    searchBox.addEventListener("input", () => {
+      const next = searchBox.value.trim().toLowerCase();
+      if (next === query) return;
+      query = next;
+      if (query) {
+        // Searching searches everything, not the current slice.
+        groupFilter = "all";
+        if (view !== "stations") {
+          view = "stations";
+          document.querySelectorAll(".nav button").forEach((item) => item.removeAttribute("aria-current"));
+          document.querySelector('[data-nav="stations"]')?.setAttribute("aria-current", "page");
+        }
+      }
+      render();
+    });
+    searchBox.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && searchBox.value) {
+        searchBox.value = "";
+        query = "";
+        render();
+        searchBox.blur();
+      }
+    });
 
     function renderFilters() {
       const box = document.querySelector("#filters");
@@ -912,6 +944,8 @@
     });
 
     document.addEventListener("keydown", event => {
+      if (event.target.matches("input")) return;
+      if (event.key === "/") { event.preventDefault(); searchBox.focus(); return; }
       if (event.key === "ArrowDown" || event.key === "ArrowRight") { event.preventDefault(); skipBudget = 0; tuneStep(1); }
       if (event.key === "ArrowUp" || event.key === "ArrowLeft") { event.preventDefault(); skipBudget = 0; tuneStep(-1); }
       if (event.code === "Space" && !event.target.matches("button, input")) { event.preventDefault(); player.paused ? start() : userPause(); }
