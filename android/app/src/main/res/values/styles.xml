@@ -1,0 +1,5 @@
+<resources>
+    <style name="RadioDialCarTheme" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:colorAccent">#B94E7C</item>
+    </style>
+</resources>

@@ -684,7 +684,9 @@ public class MainActivity extends Activity {
         grid.setPadding(dp(2), dp(2), dp(2), dp(6));
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                Station station = visibleStations().get(pos);
+                // Resolve through the adapter so a click always maps to the item
+                // currently displayed, including immediately after changing filters.
+                Station station = (Station) adapter.getItem(pos);
                 if (directoryMode) { selectDirectoryStation(station); return; }
                 tuned = station;
                 if (playing == station && wantPlaying) userStop();
@@ -881,7 +883,7 @@ public class MainActivity extends Activity {
         grid.setPadding(px(4), px(4), px(4), px(4));
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                Station s = shown.get(pos);
+                Station s = (Station) adapter.getItem(pos);
                 tuned = s;
                 if (playing == s && wantPlaying) userStop();
                 else play(s);
