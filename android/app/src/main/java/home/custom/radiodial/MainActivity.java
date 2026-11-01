@@ -179,7 +179,8 @@ public class MainActivity extends Activity {
         android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
         android.app.UiModeManager uiMode = (android.app.UiModeManager) getSystemService(UI_MODE_SERVICE);
         boolean isTv = uiMode != null && uiMode.getCurrentModeType() == android.content.res.Configuration.UI_MODE_TYPE_TELEVISION;
-        compact = !isTv && getResources().getConfiguration().smallestScreenWidthDp < 600;
+        boolean largeScreen = getResources().getConfiguration().smallestScreenWidthDp >= 600;
+        compact = !isTv && !largeScreen;
         // Phone uses dp-based native sizing; TV retains the 1920x1080 canvas scale.
         unit = compact ? dm.density : Math.max(dm.widthPixels, dm.heightPixels) / 1920f;
         String bundled = readBundled();
