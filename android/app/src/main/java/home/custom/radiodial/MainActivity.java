@@ -258,8 +258,11 @@ public class MainActivity extends Activity {
     private Station stationForCurrentItem() {
         if (player == null || player.getCurrentMediaItem() == null) return null;
         String mediaId = player.getCurrentMediaItem().mediaId;
+        String streamUrl = player.getCurrentMediaItem().localConfiguration == null ? ""
+                : player.getCurrentMediaItem().localConfiguration.uri.toString();
         for (Station station : stations) {
-            if (station.url.equals(mediaId) || ("station:" + station.url).equals(mediaId)) return station;
+            if (station.url.equals(streamUrl) || station.url.equals(mediaId)
+                    || ("station:" + station.url).equals(mediaId)) return station;
         }
         return null;
     }
