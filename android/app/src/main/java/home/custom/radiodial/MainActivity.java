@@ -46,6 +46,7 @@ import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -176,7 +177,9 @@ public class MainActivity extends Activity {
         favourites.addAll(prefs.getStringSet("fav", new HashSet<String>()));
         loadDead();
         android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
-        compact = getResources().getConfiguration().smallestScreenWidthDp < 600;
+        android.app.UiModeManager uiMode = (android.app.UiModeManager) getSystemService(UI_MODE_SERVICE);
+        boolean isTv = uiMode != null && uiMode.getCurrentModeType() == android.content.res.Configuration.UI_MODE_TYPE_TELEVISION;
+        compact = !isTv && getResources().getConfiguration().smallestScreenWidthDp < 600;
         // Phone uses dp-based native sizing; TV retains the 1920x1080 canvas scale.
         unit = compact ? dm.density : Math.max(dm.widthPixels, dm.heightPixels) / 1920f;
         String bundled = readBundled();
@@ -387,17 +390,33 @@ public class MainActivity extends Activity {
         return p;
     }
 
-    /** The site's hard offset shadow: an ink block peeking out bottom-right. */
+    /** The site's hard offset shadow: an ink block peeking out bottom-right.
+     *  The shadow is sized exactly like the content (never MATCH_PARENT),
+     *  so it can't blow up a WRAP_CONTENT parent. */
     private FrameLayout shadowed(View content, int radiusPx, int off) {
         FrameLayout f = new FrameLayout(this);
         f.setClipChildren(false);
         View sh = new View(this);
         sh.setBackground(rect(line, radiusPx, 0, 0));
+        // Sized after layout to exactly mirror the content: WRAP_CONTENT
+        // measurement can't be trusted for a bare View inside a WRAP parent.
         FrameLayout.LayoutParams sp = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                0, 0, Gravity.TOP | Gravity.LEFT);
         sp.leftMargin = off;
         sp.topMargin = off;
         f.addView(sh, sp);
+        final View shadow = sh;
+        final View body = content;
+        final int inset = off;
+        sh.post(new Runnable() {
+            @Override public void run() {
+                FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
+                        body.getWidth(), body.getHeight(), Gravity.TOP | Gravity.LEFT);
+                lp2.leftMargin = inset;
+                lp2.topMargin = inset;
+                shadow.setLayoutParams(lp2);
+            }
+        });
         FrameLayout.LayoutParams cp = (content.getLayoutParams() instanceof FrameLayout.LayoutParams)
                 ? (FrameLayout.LayoutParams) content.getLayoutParams()
                 : new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -872,16 +891,14 @@ public class MainActivity extends Activity {
         main.addView(chipScroll, lp(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, px(-6), 0, px(-6), px(8)));
 
-        grid = new GridView(this);
         adapter = new StationAdapter();
+        grid = new GridView(this);
         grid.setAdapter(adapter);
         grid.setNumColumns(2);
         grid.setHorizontalSpacing(px(18));
         grid.setVerticalSpacing(px(16));
         grid.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         grid.setVerticalScrollBarEnabled(false);
-        grid.setSelector(rect(0x00000000, px(20), px(4), FOCUS));
-        grid.setDrawSelectorOnTop(true);
         grid.setClipToPadding(false);
         grid.setPadding(px(4), px(4), px(4), px(4));
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -920,13 +937,13 @@ public class MainActivity extends Activity {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         frame.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-        fp.setMargins(px(40), px(30), px(40), px(36));
+        fp.setMargins(px(72), px(56), px(72), px(60));
         root.addView(shadowed(frame, px(28), px(9)), fp);
 
         setContentView(root);
         rebuildChips();
         refreshShown();
-        grid.requestFocus();
+        if (grid != null) grid.requestFocus();
     }
 
     private TextView navButton(String symbol, String label, View.OnClickListener click) {
@@ -1026,7 +1043,7 @@ public class MainActivity extends Activity {
         updateChips();
         if (sectionTitle != null) sectionTitle.setText("On the dial");
         adapter.notifyDataSetChanged();
-        if (!shown.isEmpty()) grid.setSelection(shown.indexOf(tuned));
+        if (!shown.isEmpty() && grid != null) grid.setSelection(shown.indexOf(tuned));
         refreshCard();
     }
 
@@ -1127,7 +1144,7 @@ public class MainActivity extends Activity {
         if (shown.isEmpty()) return;
         int i = shown.indexOf(tuned);
         tuned = shown.get(((i < 0 ? 0 : i) + dir + shown.size()) % shown.size());
-        grid.setSelection(shown.indexOf(tuned));
+        if (grid != null) grid.setSelection(shown.indexOf(tuned));
         refreshCard();
         if (thenPlay) play(tuned);
     }
@@ -1373,7 +1390,8 @@ public class MainActivity extends Activity {
                         directoryResults.clear(); directoryResults.addAll(results);
                         directoryMode = true; status = results.size() + " results · tap one to save it.";
                         sectionTitle.setText("Search results"); statusText.setText(status);
-                        adapter.notifyDataSetChanged(); grid.setSelection(0);
+                        adapter.notifyDataSetChanged();
+                        if (grid != null) grid.setSelection(0);
                     }
                 });
             }
