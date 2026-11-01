@@ -311,11 +311,35 @@ public class MainActivity extends Activity {
         if (dark) {
             ink = 0xFFF2EDF3; line = 0xFFE0D8E2;
             paper = 0xFF18161B; cardBg = 0xFF242028; asideBg = 0xFF1E1A22;
-            pink = 0xFFF7ADCF; yellow = 0xFFBC991A; blue = 0xFF347585; muted_ = 0xFFA79EA7;
+            pink = 0xFFB94E7C; yellow = 0xFFBC991A; blue = 0xFF347585; muted_ = 0xFFA79EA7;
         } else {
             ink = 0xFF282529; line = ink; paper = 0xFFFFFDF9; cardBg = 0xFFFFFFFF; asideBg = 0xFFFFFEFA;
             pink = 0xFFF7ADCF; yellow = 0xFFF8D860; blue = 0xFF9FE5ED; muted_ = 0xFF766F73;
         }
+    }
+
+    private GradientDrawable pageBackdrop() {
+        GradientDrawable background = new GradientDrawable();
+        background.setShape(GradientDrawable.RECTANGLE);
+        background.setGradientType(GradientDrawable.RADIAL_GRADIENT);
+        background.setGradientCenter(0.05f, 0.08f);
+        background.setGradientRadius(Math.max(dp(220), getResources().getDisplayMetrics().widthPixels * 0.24f));
+        int glow = dark ? 0xFF26242A : 0xFFFFFEFC;
+        background.setColors(new int[]{glow, glow, paper});
+        return background;
+    }
+
+    private void addBadgeHighlight(FrameLayout badge, int insetPx, int strokePx) {
+        GradientDrawable highlight = new GradientDrawable();
+        highlight.setShape(GradientDrawable.OVAL);
+        highlight.setColor(0x00000000);
+        highlight.setStroke(strokePx, 0x66FFFFFF);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-1, -1);
+        params.setMargins(insetPx, insetPx, insetPx, insetPx);
+        View highlightView = new View(this);
+        highlightView.setBackground(highlight);
+        highlightView.setClickable(false);
+        badge.addView(highlightView, params);
     }
 
     private TextView text(String s, float sizePx, int color, int style) {
@@ -450,7 +474,7 @@ public class MainActivity extends Activity {
         }
         getWindow().getDecorView().setSystemUiVisibility(systemUi);
         FrameLayout root = new FrameLayout(this);
-        root.setBackgroundColor(paper);
+        root.setBackground(pageBackdrop());
         LinearLayout shell = new LinearLayout(this);
         shell.setOrientation(LinearLayout.VERTICAL);
         shell.setPadding(dp(18), dp(12), dp(18), dp(14));
@@ -516,13 +540,16 @@ public class MainActivity extends Activity {
         badgeCode = text("", sp(17), INK_FIXED, Typeface.BOLD);
         badgeCode.setTypeface(Typeface.create("serif", Typeface.BOLD));
         badgeCode.setGravity(Gravity.CENTER);
-        badgeCode.setPadding(dp(6), 0, dp(6), 0);
+        badgeCode.setMaxLines(3);
         badge.addView(badgeCode, new FrameLayout.LayoutParams(-1, -1));
         badgeLogo = new ImageView(this);
         badgeLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
         badgeLogo.setVisibility(View.GONE);
-        badge.addView(badgeLogo, new FrameLayout.LayoutParams(-1, -1));
-        identity.addView(badge, new LinearLayout.LayoutParams(dp(72), dp(72)));
+        FrameLayout.LayoutParams badgeImageLp = new FrameLayout.LayoutParams(-1, -1);
+        badgeImageLp.setMargins(dp(2), dp(2), dp(2), dp(2));
+        badge.addView(badgeLogo, badgeImageLp);
+        addBadgeHighlight(badge, dp(2), dp(8));
+        identity.addView(badge, new LinearLayout.LayoutParams(dp(76), dp(76)));
 
         LinearLayout info = new LinearLayout(this);
         info.setOrientation(LinearLayout.VERTICAL);
@@ -541,7 +568,7 @@ public class MainActivity extends Activity {
         info.addView(cardDesc, lp(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
                 0, dp(3), 0, 0));
         identity.addView(info, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-        card.addView(identity, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(72)));
+        card.addView(identity, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(76)));
 
         LinearLayout controls = new LinearLayout(this);
         controls.setGravity(Gravity.CENTER);
@@ -688,7 +715,7 @@ public class MainActivity extends Activity {
         if (compact) { buildPhoneUi(); return; }
         applyPalette();
         FrameLayout root = new FrameLayout(this);
-        root.setBackgroundColor(paper);
+        root.setBackground(pageBackdrop());
 
         LinearLayout frame = new LinearLayout(this);
         frame.setOrientation(LinearLayout.HORIZONTAL);
@@ -764,14 +791,17 @@ public class MainActivity extends Activity {
         badgeCode = text("", px(27), INK_FIXED, Typeface.BOLD);
         badgeCode.setTypeface(Typeface.create("serif", Typeface.BOLD));
         badgeCode.setGravity(Gravity.CENTER);
-        badgeCode.setPadding(px(10), 0, px(10), 0);
+        badgeCode.setMaxLines(3);
         badge.addView(badgeCode, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         badgeLogo = new ImageView(this);
         badgeLogo.setScaleType(ImageView.ScaleType.CENTER_CROP);
         badgeLogo.setVisibility(View.GONE);
-        badge.addView(badgeLogo, new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        FrameLayout.LayoutParams badgeImageLp = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        badgeImageLp.setMargins(px(3), px(3), px(3), px(3));
+        badge.addView(badgeLogo, badgeImageLp);
+        addBadgeHighlight(badge, px(3), px(8));
         card.addView(badge, lp(px(110), px(110), 0, 0, px(24), 0));
 
         LinearLayout info = new LinearLayout(this);
@@ -1012,19 +1042,24 @@ public class MainActivity extends Activity {
         if (liveBadge == null) return;
         boolean active = player != null && player.isPlaying();
         android.text.SpannableString label = new android.text.SpannableString("●  LIVE RADIO");
-        label.setSpan(new android.text.style.ForegroundColorSpan(active ? 0xFF168653 : muted_),
+        label.setSpan(new android.text.style.ForegroundColorSpan(active ? 0xFF168653 : 0xFFE54555),
                 0, 1, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         liveBadge.setText(label);
         liveBadge.setTextColor(muted_);
-        liveBadge.setBackground(rect(cardBg, dp(20), dp(1), active ? 0xFF168653 : line));
+        liveBadge.setBackground(rect(cardBg, dp(20), dp(1), line));
     }
 
     private void showBadge(final Station s) {
         badgeLogo.setVisibility(View.GONE);
         badgeCode.setVisibility(View.VISIBLE);
         if (s == null) { badgeCode.setText(""); return; }
-        badgeCode.setText(s.code);
-        badgeCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, px(s.code.length() > 8 ? 16 : 27));
+        String code = s.code == null ? s.name : s.code;
+        boolean longCode = code.replace(" ", "").length() > 5;
+        badgeCode.setText(code.replaceFirst(" ", "\n"));
+        badgeCode.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                compact ? sp(longCode ? 14 : 19) : px(longCode ? 14 : 27));
+        int codeInset = longCode ? (compact ? dp(14) : px(14)) : 0;
+        badgeCode.setPadding(codeInset, 0, codeInset, 0);
         if (s.logo.isEmpty()) return;
         Bitmap cached = logos.get(s.logo);
         if (cached != null) {
@@ -1114,22 +1149,22 @@ public class MainActivity extends Activity {
             row.setLayoutParams(new AbsListView.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, compact ? dp(64) : px(112)));
 
-            FrameLayout thumb = new FrameLayout(MainActivity.this);
-            int thumbSize = compact ? dp(42) : px(72);
-            thumb.setBackground(rect(pink, compact ? dp(12) : px(18), dp(1), line));
-            roundClip(thumb, compact ? dp(12) : px(18));
-            TextView fallback = text(s.code, compact ? sp(9) : px(15), INK_FIXED, Typeface.BOLD);
-            fallback.setGravity(Gravity.CENTER);
-            fallback.setSingleLine(true);
-            fallback.setEllipsize(android.text.TextUtils.TruncateAt.END);
-            thumb.addView(fallback, new FrameLayout.LayoutParams(-1, -1));
-            ImageView thumbnail = new ImageView(MainActivity.this);
-            thumbnail.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            thumb.addView(thumbnail, new FrameLayout.LayoutParams(-1, -1));
-            bindStationLogo(thumbnail, s);
-            LinearLayout.LayoutParams thumbLp = new LinearLayout.LayoutParams(thumbSize, thumbSize);
-            thumbLp.setMargins(0, 0, compact ? dp(10) : px(16), 0);
-            row.addView(thumb, thumbLp);
+            if (s.logo != null && !s.logo.isEmpty()) {
+                FrameLayout thumb = new FrameLayout(MainActivity.this);
+                int thumbSize = compact ? dp(34) : px(44);
+                thumb.setVisibility(View.GONE);
+                thumb.setBackground(rect(yellow, compact ? dp(12) : px(12), dp(2), line));
+                roundClip(thumb, compact ? dp(12) : px(12));
+                ImageView thumbnail = new ImageView(MainActivity.this);
+                thumbnail.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                FrameLayout.LayoutParams imageLp = new FrameLayout.LayoutParams(-1, -1);
+                imageLp.setMargins(dp(2), dp(2), dp(2), dp(2));
+                thumb.addView(thumbnail, imageLp);
+                bindStationLogo(thumbnail, s);
+                LinearLayout.LayoutParams thumbLp = new LinearLayout.LayoutParams(thumbSize, thumbSize);
+                thumbLp.setMargins(0, 0, compact ? dp(10) : px(14), 0);
+                row.addView(thumb, thumbLp);
+            }
 
             LinearLayout col = new LinearLayout(MainActivity.this);
             col.setOrientation(LinearLayout.VERTICAL);
@@ -1166,6 +1201,7 @@ public class MainActivity extends Activity {
         if (cached != null) {
             image.setImageBitmap(cached);
             image.setVisibility(View.VISIBLE);
+            ((View) image.getParent()).setVisibility(View.VISIBLE);
             return;
         }
         synchronized (loadingLogos) {
@@ -1184,6 +1220,7 @@ public class MainActivity extends Activity {
                         if (logoUrl.equals(image.getTag())) {
                             image.setImageBitmap(bitmap);
                             image.setVisibility(View.VISIBLE);
+                            ((View) image.getParent()).setVisibility(View.VISIBLE);
                         }
                         if (adapter != null) adapter.notifyDataSetChanged();
                     }
@@ -1196,9 +1233,7 @@ public class MainActivity extends Activity {
         return directoryMode ? directoryResults : shown;
     }
 
-    private int pinkDeep() {
-        return 0xFFF7ADCF;
-    }
+    private int pinkDeep() { return ink; }
 
     // ====================================================================
     // station list: download, parse, cache
