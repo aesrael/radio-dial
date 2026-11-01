@@ -762,6 +762,9 @@ public class MainActivity extends Activity {
         });
         aside.addView(navStations, lp(ViewGroup.LayoutParams.MATCH_PARENT, px(74), 0, 0, 0, px(10)));
         aside.addView(navFavourites, lp(ViewGroup.LayoutParams.MATCH_PARENT, px(74), 0, 0, 0, px(10)));
+        aside.addView(navButton("\u2315", "Search", new View.OnClickListener() {
+            @Override public void onClick(View v) { openSearchDialog(); }
+        }), lp(ViewGroup.LayoutParams.MATCH_PARENT, px(74), 0, 0, 0, px(10)));
 
         LinearLayout tip = new LinearLayout(this);
         tip.setOrientation(LinearLayout.VERTICAL);
@@ -945,6 +948,84 @@ public class MainActivity extends Activity {
         rebuildChips();
         refreshShown();
         if (grid != null) grid.requestFocus();
+    }
+
+    /** TV search: same filter as the phone field, plus Radio Browser lookup. */
+    private void openSearchDialog() {
+        final android.app.Dialog dialog = new android.app.Dialog(this);
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(px(40), px(32), px(40), px(28));
+        box.setBackground(rect(cardBg, px(24), px(2), ink));
+        box.addView(text("Search stations", px(32), ink, Typeface.BOLD));
+        final android.widget.EditText field = new android.widget.EditText(this);
+        field.setSingleLine(true);
+        field.setTextSize(TypedValue.COMPLEX_UNIT_PX, px(24));
+        field.setTextColor(ink);
+        field.setHintTextColor(muted_);
+        field.setHint("Type a name, genre or place");
+        field.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH);
+        field.setBackground(rect(paper, px(16), px(2), ink));
+        field.setPadding(px(20), px(14), px(20), px(14));
+        field.setText(searchQuery);
+        LinearLayout.LayoutParams fp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        fp.topMargin = px(16);
+        box.addView(field, fp);
+        field.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchQuery = s.toString().trim();
+                if (directoryMode) {
+                    directoryMode = false;
+                    directoryResults.clear();
+                    status = "Choose a station to tune in.";
+                }
+                refreshShown();
+            }
+            @Override public void afterTextChanged(Editable e) { }
+        });
+        field.setOnEditorActionListener((view, actionId, event) -> {
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
+                searchRadioBrowser();
+                dialog.dismiss();
+                return true;
+            }
+            return false;
+        });
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams rp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rp.topMargin = px(18);
+        box.addView(row, rp);
+        TextView find = block("Search online", px(24), INK_FIXED, yellow, yellow, px(16), px(16),
+                new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        searchRadioBrowser();
+                        dialog.dismiss();
+                    }
+                });
+        row.addView(find, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        TextView clear = block("Clear", px(24), ink, cardBg, pink, px(16), px(16),
+                new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        searchQuery = "";
+                        directoryMode = false;
+                        directoryResults.clear();
+                        refreshShown();
+                        dialog.dismiss();
+                    }
+                });
+        LinearLayout.LayoutParams cp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        cp.leftMargin = px(12);
+        row.addView(clear, cp);
+        dialog.setContentView(box, new ViewGroup.LayoutParams(px(760), ViewGroup.LayoutParams.WRAP_CONTENT));
+        android.view.Window w = dialog.getWindow();
+        if (w != null) w.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        field.requestFocus();
     }
 
     private TextView navButton(String symbol, String label, View.OnClickListener click) {
