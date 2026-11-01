@@ -916,8 +916,7 @@ public class MainActivity extends Activity {
         grid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos >= 0 && pos < shown.size() && tuned != shown.get(pos)) {
-                    tuned = shown.get(pos); // Up / Down tunes
-                    refreshCard();
+                    play(shown.get(pos)); // Up / Down tunes and plays on TV
                 }
             }
             @Override public void onNothingSelected(AdapterView<?> parent) { }
@@ -1228,7 +1227,7 @@ public class MainActivity extends Activity {
         tuned = shown.get(((i < 0 ? 0 : i) + dir + shown.size()) % shown.size());
         if (grid != null) grid.setSelection(shown.indexOf(tuned));
         refreshCard();
-        if (thenPlay) play(tuned);
+        play(tuned); // the shown station is always the playing station
     }
 
     // ====================================================================
