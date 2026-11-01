@@ -1,0 +1,1437 @@
+[
+  {
+    "name": "LBC",
+    "code": "LBC UK",
+    "description": "News, conversation and callers.",
+    "url": "https://media-ice.musicradio.com/LBCUKMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "LBC News",
+    "code": "LBC NEWS",
+    "description": "Rolling UK and world news.",
+    "url": "https://media-ice.musicradio.com/LBCNewsUKMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Capital",
+    "code": "CAPITAL",
+    "description": "Hit music and pop culture.",
+    "url": "https://media-ice.musicradio.com/CapitalUKMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Heart",
+    "code": "HEART",
+    "description": "Feel-good hits, all day.",
+    "url": "https://media-ice.musicradio.com/HeartUKMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Radio X",
+    "code": "RADIO X",
+    "description": "Indie, rock and big personalities.",
+    "url": "https://media-ice.musicradio.com/RadioXUKMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Classic FM",
+    "code": "CLASSIC",
+    "description": "Classical music, made easy.",
+    "url": "https://media-ice.musicradio.com/ClassicFMMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Classic_FM_logo.svg/472px-Classic_FM_logo.svg.png"
+  },
+  {
+    "name": "Smooth",
+    "code": "SMOOTH",
+    "description": "Your easy listening escape.",
+    "url": "https://media-ice.musicradio.com/SmoothUKMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Gold",
+    "code": "GOLD",
+    "description": "Classic hits from decades past.",
+    "url": "https://media-ice.musicradio.com/GoldMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.mygoldmusic.co.uk/assets_v4r/gold/img/favicon-196x196.png"
+  },
+  {
+    "name": "Kisstory",
+    "code": "KISSTORY",
+    "description": "Old skool and anthems.",
+    "url": "https://stream-mz.planetradio.co.uk/kisstory.mp3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "BBC Radio 1",
+    "code": "BBC R1",
+    "description": "The best new music and entertainment.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d96000.norewind.m3u8",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "BBC 6 Music",
+    "code": "BBC 6M",
+    "description": "Alternative music for curious minds.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "NTS 1",
+    "code": "NTS 1",
+    "description": "Eclectic shows from London and beyond.",
+    "url": "https://stream-relay-geo.ntslive.net/stream",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "NTS 2",
+    "code": "NTS 2",
+    "description": "More specialist music and guests.",
+    "url": "https://stream-relay-geo.ntslive.net/stream2",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "talkSPORT",
+    "code": "TALKSPORT",
+    "description": "Live sport, debate and commentary.",
+    "url": "https://radio.talksport.com/stream",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAcdmwRcs4FcWk_OQqxq4EyZH5YA7ixM2dvQ&usqp=CAU"
+  },
+  {
+    "name": "Magic",
+    "code": "MAGIC",
+    "description": "Mellow hits and easy favourites.",
+    "url": "https://stream-mz.hellorayo.co.uk/magicnational.mp3?direct=true&aw_0_1st.playerid=BMUK_TuneIn&aw_0_1st.skey=7374499933&stationCode=mag",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.celsoazevedo.com/files/2025/magic.png"
+  },
+  {
+    "name": "Absolute",
+    "code": "ABSOLUTE",
+    "description": "Rock, indie and real music.",
+    "url": "https://stream-ar.hellorayo.co.uk/absoluteradiohigh.aac?direct=true&aw_0_1st.skey=1602676850&rp_source=1",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Radio 2",
+    "code": "RADIO 2",
+    "description": "Classic hits and daytime companions.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d96000.norewind.m3u8",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Radio 4",
+    "code": "RADIO 4",
+    "description": "News, drama and speech.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d96000.norewind.m3u8",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "1Xtra",
+    "code": "1XTRA",
+    "description": "Hip-hop, grime, R&B and dance.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_92079267/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d96000.norewind.m3u8",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "5 Live",
+    "code": "5 LIVE",
+    "description": "Live news and sport.",
+    "url": "https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Heart 80s",
+    "code": "H80S",
+    "description": "Non-stop 80s classics.",
+    "url": "https://media-ssl.musicradio.com/Heart80sMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.heart.co.uk/assets_v4r/heart/img/favicon-196x196.png"
+  },
+  {
+    "name": "Virgin",
+    "code": "VIRGIN",
+    "description": "Rock, pop and frank opinions.",
+    "url": "https://radio.virginradio.co.uk/stream",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.celsoazevedo.com/files/2022/virgin-radio-uk.jpg"
+  },
+  {
+    "name": "Times Radio",
+    "code": "TIMES",
+    "description": "Smart speech and interviews.",
+    "url": "https://timesradio.wireless.radio/stream",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://play-lh.googleusercontent.com/SSmTtYYV5SkMMJ6_ojBDxHkprncSfh_jrhfn8f7rj3tnDOUIaNA9Vf28FqVS1zrTvE9_"
+  },
+  {
+    "name": "Planet Rock",
+    "code": "PROCK",
+    "description": "Classic and modern rock.",
+    "url": "https://stream-mz.hellorayo.co.uk/planetrock.aac?direct=true&aw_0_1st.playerid=BMUK_Airable&aw_0_1st.skey=6778249992",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://cdn-profiles.tunein.com/s2377/images/logod.png"
+  },
+  {
+    "name": "GB News",
+    "code": "GB NEWS",
+    "description": "News debate and opinion.",
+    "url": "https://listen-gbnews.sharp-stream.com/gbnews.mp3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://cdn-profiles.tunein.com/s310252/images/logod.png"
+  },
+  {
+    "name": "Heart 90s",
+    "code": "H90S",
+    "description": "Non-stop 90s classics.",
+    "url": "https://media-ssl.musicradio.com/Heart90sMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.heart.co.uk/assets_v4r/heart/img/favicon-196x196.png"
+  },
+  {
+    "name": "Heart 70s",
+    "code": "Heart 70s",
+    "description": "70s · national · UK · 128k",
+    "url": "https://media-ssl.musicradio.com/Heart70sMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "BBC World Service",
+    "code": "BBC World",
+    "description": "bbc · UK · 56k",
+    "url": "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://cdn-profiles.tunein.com/s24948/images/logoq.jpg?t=1"
+  },
+  {
+    "name": "Smooth Chill",
+    "code": "Smooth Chill",
+    "description": "chillout · national · UK · 128k",
+    "url": "https://media-ssl.musicradio.com/ChillMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.smoothradio.com/assets_v4r/smooth/img/favicon-196x196.png"
+  },
+  {
+    "name": "Heart Dance",
+    "code": "Heart Dance",
+    "description": "dance · national · UK · 128k",
+    "url": "https://media-ssl.musicradio.com/HeartDanceMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.heart.co.uk/assets_v4r/heart/img/favicon-196x196.png"
+  },
+  {
+    "name": "Capital Dance",
+    "code": "Capital Dance",
+    "description": "UK · UK · 128k",
+    "url": "https://icecast.thisisdax.com/CapitalDanceMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.capitaldance.com/assets_v4r/capitaldance/img/favicon-196x196.png"
+  },
+  {
+    "name": "Virgin Radio Chilled",
+    "code": "Virgin Radio",
+    "description": "UK · UK",
+    "url": "https://radio.virginradio.co.uk/stream-chilled?aw_0_1st.platform=vr-web",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Radio X Classic Rock",
+    "code": "Radio X Classic",
+    "description": "classic rock · rock · UK · 128k",
+    "url": "https://media-ice.musicradio.com/RadioXClassicRockMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://i.imgur.com/eBIsjQw.jpg"
+  },
+  {
+    "name": "Boom Radio",
+    "code": "Boom Radio",
+    "description": "oldies · UK · 128k",
+    "url": "https://listen-boomradio.sharp-stream.com/65_boom_radio_live_128",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Fun Kids",
+    "code": "Fun Kids",
+    "description": "kids · UK · 128k",
+    "url": "https://listen-funkids.sharp-stream.com/funkids.mp3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://firebasestorage.googleapis.com/v0/b/radiogalaxy-580f4.appspot.com/o/images%2FIMG_20240128_211904850.jpg?alt=media&token=bcf08431-92fb-47f1-9703-5779d8e83bce"
+  },
+  {
+    "name": "Classic FM Calm",
+    "code": "Classic FM Calm",
+    "description": "classical · romantic · UK · 128k",
+    "url": "https://media-ice.musicradio.com/ClassicFMCalmMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Smooth Relax",
+    "code": "Smooth Relax",
+    "description": "easy listening · relaxing · UK · 128k",
+    "url": "https://icecast.thisisdax.com/SmoothRelaxMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Capital Chill",
+    "code": "Capital Chill",
+    "description": "chill · chilled · UK · 48k",
+    "url": "https://media-ssl.musicradio.com/CapitalChill",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://cdn-profiles.tunein.com/s323115/images/logod.jpg"
+  },
+  {
+    "name": "Kool FM",
+    "code": "Kool FM",
+    "description": "breakbeat · dancefloor · UK · 128k",
+    "url": "https://admin.stream.rinse.fm/proxy/kool/stream",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://pbs.twimg.com/profile_images/1638236080674578434/Hbww_nFm_400x400.jpg"
+  },
+  {
+    "name": "Virgin Radio Anthems",
+    "code": "Virgin Radio",
+    "description": "anthems · national · UK",
+    "url": "https://radio.virginradio.co.uk/stream-anthems",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "KISS",
+    "code": "KISS",
+    "description": "bauer radio · kiss · UK · 112k",
+    "url": "https://live-kiss.sharp-stream.com/kiss100.mp3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Smooth Country",
+    "code": "Smooth Country",
+    "description": "country · country music · UK · 48k",
+    "url": "https://media-ssl.musicradio.com/SmoothCountry",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://www.smoothradio.com/assets_v4r/smooth/img/favicon-196x196.png"
+  },
+  {
+    "name": "Gold London",
+    "code": "Gold London",
+    "description": "UK · UK · 48k",
+    "url": "https://media-ssl.musicradio.com/Gold?isLoggedIn=false&dax_version=release_2019&dax_player=GlobalPlayer&dax_platform=Web&aisDelivery=streaming&listenerid=1612127423858_0.6253666805372976&aw_0_1st.playerid=GlobalPlayer&aw_0_1st.skey=1612127423&aw_0_req.userConsentV2=CPA5x3uPA5x3uAGABCENBLCgAAAAAAAAAATIAAAAAAAA.YAAAAAAAAAAA",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Classic FM Movies",
+    "code": "Classic FM",
+    "description": "classical · film score · UK · 128k",
+    "url": "https://media-ice.musicradio.com/ClassicFMMoviesMP3",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "Rinse",
+    "code": "Rinse",
+    "description": "dance music · dubstep · UK · 128k",
+    "url": "https://admin.stream.rinse.fm/proxy/rinse_uk/stream",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://i1.sndcdn.com/avatars-HFUM5iVBOYInWEED-oro7Vg-t200x200.jpg"
+  },
+  {
+    "name": "Reprezent Radio",
+    "code": "Reprezent Radio",
+    "description": "grime · hiphop · UK · 128k",
+    "url": "https://radio.canstream.co.uk:8022/live.mp3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://cdn.prod.website-files.com/62bc4b9b51f455e9a386fdd1/62be3ea967ffbeb32ccfe453_android-chrome-256x256.png"
+  },
+  {
+    "name": "BBC Radio Ulster",
+    "code": "BBC Radio Ulster",
+    "description": "UK · UK · 101k",
+    "url": "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/audio_syndication_low_sbr_v1/aks/bbc_radio_ulster.m3u8",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://sounds.files.bbci.co.uk/3.5.0/networks/bbc_radio_ulster/colour_default.svg"
+  },
+  {
+    "name": "Absolute Radio 80s",
+    "code": "Absolute Radio",
+    "description": "80s · UK · 128k",
+    "url": "https://stream-ar.hellorayo.co.uk/absolute80shigh.aac?aw_0_1st.skey=1602676850&direct=true&rp_source=1",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://media.bauerradio.com/image/upload/c_crop,g_custom/v1717682143/brand_manager/stations/d8fpii0yfv7fimdhxqp1.png"
+  },
+  {
+    "name": "Absolute Classic Rock",
+    "code": "Absolute Classic",
+    "description": "rock · UK · 47k",
+    "url": "https://stream-ar.hellorayo.co.uk/absoluteclassicrock.aac?aw_0_1st.skey=1602676850&direct=true&rp_source=1",
+    "group": "UK",
+    "country": "GB"
+  },
+  {
+    "name": "BBC Radio 5 Sports Extra (UK only)",
+    "code": "BBC Radio 5",
+    "description": "sports · UK · 135k",
+    "url": "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/uk/audio_syndication_med_sbr_v1/aks/bbc_radio_five_live_sports_extra.m3u8",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://ichef.bbci.co.uk/images/ic/raw/p0mw75dn.png.webp"
+  },
+  {
+    "name": "Capital XTRA",
+    "code": "Capital XTRA",
+    "description": "grime · hip hop · UK · 128k",
+    "url": "https://media-the.musicradio.com/CapitalXTRALondonMP3",
+    "group": "UK",
+    "country": "GB",
+    "logo": "https://assets6.capitalxtra.com/2014/15/capital-xtra-logo-big-1397738967.png"
+  },
+  {
+    "name": "Groove Salad",
+    "code": "GROOVE",
+    "description": "Ambient beats from SomaFM.",
+    "url": "https://ice1.somafm.com/groovesalad-128-mp3",
+    "group": "US",
+    "country": "US"
+  },
+  {
+    "name": "Deep Space",
+    "code": "SPACE",
+    "description": "Deep ambient from SomaFM.",
+    "url": "https://ice1.somafm.com/deepspaceone-128-mp3",
+    "group": "US",
+    "country": "US"
+  },
+  {
+    "name": "KEXP",
+    "code": "KEXP",
+    "description": "Independent music from Seattle.",
+    "url": "https://kexp-mp3-128.streamguys1.com/kexp128.mp3",
+    "group": "US",
+    "country": "US",
+    "logo": "https://www.kexp.org/static/assets/img/logo-black.svg"
+  },
+  {
+    "name": "KQED 128 AAC",
+    "code": "KQED 128 AAC",
+    "description": "cultural news · documentary · USA · 128k",
+    "url": "https://hls.kqed.org/hls/kqed_app/playlist.m3u8",
+    "group": "US",
+    "country": "US",
+    "logo": "https://asset.brandfetch.io/idQPhN-lSw/idojwfAi5K.png"
+  },
+  {
+    "name": "KCRW ECLECTIC 24",
+    "code": "KCRW ECLECTIC 24",
+    "description": "US · USA · 192k",
+    "url": "https://streams.kcrw.com/e24_mp3",
+    "group": "US",
+    "country": "US"
+  },
+  {
+    "name": "WGBH 89.7",
+    "code": "89.7",
+    "description": "US · USA · 65k",
+    "url": "https://streams.audio.wgbh.org/wgbh",
+    "group": "US",
+    "country": "US",
+    "logo": "https://wgbh.org/apple-touch-icon.png"
+  },
+  {
+    "name": "WFMU",
+    "code": "WFMU",
+    "description": "experimental · freeform · USA · 256k",
+    "url": "https://stream0.wfmu.org/freeform-extrahigh-primary.aac",
+    "group": "US",
+    "country": "US",
+    "logo": "https://cdn-profiles.tunein.com/s27581/images/logog.png"
+  },
+  {
+    "name": "WNYC FM",
+    "code": "WNYC FM",
+    "description": "news · USA · 96k",
+    "url": "https://fm939.wnyc.org/wnycfm-web",
+    "group": "US",
+    "country": "US"
+  },
+  {
+    "name": "KUOW",
+    "code": "KUOW",
+    "description": "public radio · USA · 96k",
+    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KUOWFM_HIGH_MP3.mp3",
+    "group": "US",
+    "country": "US",
+    "logo": "https://www.kuow.org/assets/content/logo-KUOW_NPR-Color-79d1b09d8e7d69d3e15c0b61c8e7d70167338f5fea9ba7e202b3c486982a0b89.svg"
+  },
+  {
+    "name": "WBUR",
+    "code": "WBUR",
+    "description": "news · talk · USA · 48k",
+    "url": "https://fm909.wbur.org/wbur_www",
+    "group": "US",
+    "country": "US",
+    "logo": "https://d279m997dpfwgl.cloudfront.net/wp/2016/06/wbur-audio-1000x1000.jpg"
+  },
+  {
+    "name": "WBEZ FM 91.5",
+    "code": "91.5",
+    "description": "US · USA · 64k",
+    "url": "https://radio.garden/api/ara/content/listen/-vN66oE0/channel.mp3?1770934434229",
+    "group": "US",
+    "country": "US"
+  },
+  {
+    "name": ".100 Hip hop and RNB FM",
+    "code": ".100 Hip hop and",
+    "description": "hip hop · r&b · USA · 32k",
+    "url": "https://ice64.securenetsystems.net/LFTM",
+    "group": "Hip-Hop & R&B",
+    "country": "US"
+  },
+  {
+    "name": "Pinoy Rap Radio",
+    "code": "Pinoy Rap Radio",
+    "description": "filipino · hip hop · The Philippines · 128k",
+    "url": "https://stream.zeno.fm/0cdp55nqam0uv",
+    "group": "Hip-Hop & R&B",
+    "country": "PH",
+    "logo": "https://firebasestorage.googleapis.com/v0/b/radiogalaxy-580f4.appspot.com/o/images%2FIMG_20240319_232622087.jpg?alt=media&token=a04a49c8-0272-4f24-b68a-a3b9fa0c8f0d"
+  },
+  {
+    "name": "Rádio Rap Brasil",
+    "code": "Rádio Rap Brasil",
+    "description": "rap · Brazil · 128k",
+    "url": "https://stream.zeno.fm/7c83b37e32quv",
+    "group": "Hip-Hop & R&B",
+    "country": "BR"
+  },
+  {
+    "name": "BreakZ HipHop & House",
+    "code": "BreakZ HipHop &",
+    "description": "edm · elektro · Germany · 192k",
+    "url": "https://breakz-high.rautemusik.fm/?ref=radio-browser-info",
+    "group": "Hip-Hop & R&B",
+    "country": "DE"
+  },
+  {
+    "name": "RMC R&B",
+    "code": "RMC R&B",
+    "description": "r&b · Italy · 128k",
+    "url": "https://icy.unitedradio.it/rmcweb003",
+    "group": "Hip-Hop & R&B",
+    "country": "IT"
+  },
+  {
+    "name": "Colombia Urbana",
+    "code": "Colombia Urbana",
+    "description": "hip hop · metadata · Colombia · 128k",
+    "url": "https://play10.tikast.com/proxy/colurbana?mp=/stream",
+    "group": "Hip-Hop & R&B",
+    "country": "CO",
+    "logo": "https://colombiacrossover.com/wp-content/uploads/Logo-Colombia-Urbana-1280x1280-redondo-1024x1024.png"
+  },
+  {
+    "name": "Rap House | NTS",
+    "code": "Rap House | NTS",
+    "description": "drill · experimental · 256k",
+    "url": "https://stream-mixtape-geo.ntslive.net/mixtape22",
+    "group": "Hip-Hop & R&B",
+    "country": ""
+  },
+  {
+    "name": "1LIVE RnB & Hip Hop",
+    "code": "1LIVE RnB & Hip",
+    "description": "hip hop · rap hiphop rnb · Germany · 128k",
+    "url": "https://wdr-1live-hiphoprnb.icecast.wdr.de/wdr/1live/hiphoprnb/mp3/128/stream.mp3",
+    "group": "Hip-Hop & R&B",
+    "country": "DE",
+    "logo": "https://www1.wdr.de/radio/1live/app/loopstream-1live-rnb-hip-hop-100~_v-TeaserAufmacher.jpg"
+  },
+  {
+    "name": "1 A - Deutsch Rap von 1A Radio",
+    "code": "1 A - Deutsch",
+    "description": "hip hop · rap · Germany · 128k",
+    "url": "https://1a-deutschrap.radionetz.de/1a-deutschrap.mp3",
+    "group": "Hip-Hop & R&B",
+    "country": "DE",
+    "logo": "https://www.1aradio.com/logos/1a-deutsch-rap_600x600.jpg"
+  },
+  {
+    "name": "RMF 4 DANCE & RNB",
+    "code": "RMF 4 DANCE &",
+    "description": "dance · r&b · Poland · 128k",
+    "url": "https://rs6-krk2.rmfstream.pl/rmf_4",
+    "group": "Hip-Hop & R&B",
+    "country": "PL",
+    "logo": "https://www.rmfon.pl/assets/images/favicon/apple-touch-icon.png"
+  },
+  {
+    "name": "cidade hiphop",
+    "code": "cidade hiphop",
+    "description": "hip hop · Portugal · 128k",
+    "url": "https://stream-hls.bauermedia.pt/cidhiphop.aac/playlist.m3u8",
+    "group": "Hip-Hop & R&B",
+    "country": "PT"
+  },
+  {
+    "name": "senshiphop",
+    "code": "senshiphop",
+    "description": "hip hop · oldschool · USA · 192k",
+    "url": "https://sensihiphop.radioca.st/stream",
+    "group": "Hip-Hop & R&B",
+    "country": "US",
+    "logo": "https://m.media-amazon.com/images/I/51QYpQ9cA3L._UX250_FMwebp_QL85_.jpg"
+  },
+  {
+    "name": "SomaFM Indie Pop Rocks!",
+    "code": "SomaFM Indie Pop",
+    "description": "indie · indie pop · USA · 128k",
+    "url": "https://ice6.somafm.com/indiepop-128-aac",
+    "group": "Rock",
+    "country": "US",
+    "logo": "https://somafm.com/img3/indiepop-400.jpg"
+  },
+  {
+    "name": "0 N - Classic Rock on Radio",
+    "code": "0 N - Classic",
+    "description": "80er · 80s · Germany · 128k",
+    "url": "https://0n-classicrock.radionetz.de/0n-classicrock.mp3",
+    "group": "Rock",
+    "country": "DE",
+    "logo": "https://www.0nradio.com/logos/0n-classic-rock_600x600.jpg"
+  },
+  {
+    "name": "Best Of Rock.FM Alternative Rock",
+    "code": "Best Of Rock.FM",
+    "description": "alternative metal · alternative rock · Germany",
+    "url": "https://bestofrockfm.stream.vip/altrock/mp3-256/bestofrock.fm/",
+    "group": "Rock",
+    "country": "DE",
+    "logo": "https://www.best-of-rock.fm/favicons/apple-touch-icon.png"
+  },
+  {
+    "name": "metal rock radio",
+    "code": "metal rock radio",
+    "description": "classic rock · metal · USA · 128k",
+    "url": "https://kathy.torontocast.com:2800/;",
+    "group": "Rock",
+    "country": "US"
+  },
+  {
+    "name": "89 A Radio Rock",
+    "code": "89 A Radio Rock",
+    "description": "alternative rock · rock · Brazil · 128k",
+    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_89FM_ADP.aac?dist=site-89fm",
+    "group": "Rock",
+    "country": "BR"
+  },
+  {
+    "name": "Arrow Classic Rock",
+    "code": "Arrow Classic",
+    "description": "classic rock · mp3 · The Netherlands · 96k",
+    "url": "https://stream.player.arrow.nl/arrowcr",
+    "group": "Rock",
+    "country": "NL",
+    "logo": "https://player.arrow.nl/tmp/images/default.jpg"
+  },
+  {
+    "name": "0nlineradio SOFT ROCK",
+    "code": "0nlineradio SOFT",
+    "description": "70s soft rock · 80s soft rock · Germany · 192k",
+    "url": "https://stream.0nlineradio.com/soft-rock?ref=radiobrowser",
+    "group": "Rock",
+    "country": "DE",
+    "logo": "https://i.ibb.co/SJFG3bt/soft-rock.jpg"
+  },
+  {
+    "name": "0 N - Indie on Radio",
+    "code": "0 N - Indie on",
+    "description": "alternative · electro · Germany · 128k",
+    "url": "https://0n-indie.radionetz.de/0n-indie.mp3",
+    "group": "Rock",
+    "country": "DE",
+    "logo": "https://www.0nradio.com/logos/0n-indie_600x600.jpg"
+  },
+  {
+    "name": "Rock FM",
+    "code": "Rock FM",
+    "description": "rock · Estonia · 320k",
+    "url": "https://edge02.cdn.bitflip.ee:8888/rck?_i=5f5ab186",
+    "group": "Rock",
+    "country": "EE"
+  },
+  {
+    "name": "Slow Rock 90'",
+    "code": "Slow Rock 90'",
+    "description": "90's · classic rock · Malaysia · 128k",
+    "url": "https://stream.zeno.fm/hiut6cwfoneuv",
+    "group": "Rock",
+    "country": "MY",
+    "logo": "https://zeno.fm/_next/image/?url=https%3A%2F%2Fimages.zeno.fm%2FrKtC0NpB5ZmSBUWmZtAUn1sM1w_Owj9kNo-Xuc310Ak%2Frs%3Afit%3A240%3A240%2Fg%3Ace%3A0%3A0%2FaHR0cHM6Ly9zdHJlYW0tdG9vbHMuemVub21lZGlhLmNvbS9jb250ZW50L3N0YXRpb25zLzg3MzhjNDA0LTMzODItNDgxMC04YWE3LTEwZjE3MjE2ZGRjZC9pbWFnZS8_dXBkYXRlZD0xNzAyNjMxMzU2MDAw.webp&w=750&q=100"
+  },
+  {
+    "name": "RdMix Classic Rock 70s 80s 90s",
+    "code": "RdMix Classic",
+    "description": "60s · 60s and 70s. · Canada · 128k",
+    "url": "https://cast1.torontocast.com:4610/stream",
+    "group": "Rock",
+    "country": "CA",
+    "logo": "https://static.wixstatic.com/media/f361b3_1bad7e5fb9a54196b2ac2c2fe71d6e4f~mv2.jpg"
+  },
+  {
+    "name": "Oxygen Indie",
+    "code": "Oxygen Indie",
+    "description": "alternative · indie · Hungary · 320k",
+    "url": "https://oxygenmusic.hu:8443/oxygenindie",
+    "group": "Rock",
+    "country": "HU"
+  },
+  {
+    "name": "Intense Radio - We love Dance 256K",
+    "code": "Intense Radio",
+    "description": "clubhouse · dance · The Netherlands · 256k",
+    "url": "https://secure.live-streams.nl/main",
+    "group": "Electronic",
+    "country": "NL",
+    "logo": "https://www.intenseradio.net/wp-content/uploads/2023/09/intense-radio-vierkant-4d-2026.jpg"
+  },
+  {
+    "name": "Mixadance FM",
+    "code": "Mixadance FM",
+    "description": "dance · electro · The Russian Federation · 192k",
+    "url": "https://stream.mixadance.fm/mixadance",
+    "group": "Electronic",
+    "country": "RU",
+    "logo": "https://www.mixadance.fm/apple-touch-icon.png"
+  },
+  {
+    "name": "__TRANCE__ by rautemusik (rm.fm)",
+    "code": "__TRANCE__ by",
+    "description": "electro · electro house · Germany · 192k",
+    "url": "https://trance-high.rautemusik.fm/?ref=radiobrowser",
+    "group": "Electronic",
+    "country": "DE"
+  },
+  {
+    "name": "Technolovers DEEP HOUSE",
+    "code": "Technolovers",
+    "description": "deep house · electro house · Germany · 192k",
+    "url": "https://stream.technolovers.fm/deep-house?ref=radiobrowser",
+    "group": "Electronic",
+    "country": "DE"
+  },
+  {
+    "name": "TechnoBase.FM",
+    "code": "TechnoBase.FM",
+    "description": "electronic · Germany · 192k",
+    "url": "https://listener3.mp3.tb-group.fm/tb.mp3",
+    "group": "Electronic",
+    "country": "DE",
+    "logo": "https://cdn.onlineradiobox.com/img/l/0/32040.v12.png"
+  },
+  {
+    "name": "Russian Dance Radio",
+    "code": "Russian Dance",
+    "description": "electronic · Kazakhstan · 128k",
+    "url": "https://lux-radio.com:8015/stream",
+    "group": "Electronic",
+    "country": "KZ",
+    "logo": "https://cdn.onlineradiobox.com/img/l/1/99521.v1.png"
+  },
+  {
+    "name": "Perfect Deep House",
+    "code": "Perfect Deep",
+    "description": "deep house · house · Spain",
+    "url": "https://stream.radiojar.com/asngk2sg798uv?1659885393",
+    "group": "Electronic",
+    "country": "ES",
+    "logo": "https://perfect-radio.com/____impro/1/onewebmedia/Logo%20Perfect%20Deephouse.jpg?etag=W%2F%22847e5-619665ca%22&sourceContentType=image%2Fjpeg&ignoreAspectRatio&resize=355%2B372&extract=0%2B0%2B354%2B372&quality=85"
+  },
+  {
+    "name": "Radio Record Megamix",
+    "code": "Radio Record",
+    "description": "electronic · The Russian Federation",
+    "url": "https://radiorecord.hostingradio.ru/mix96.aacp",
+    "group": "Electronic",
+    "country": "RU"
+  },
+  {
+    "name": "0nlineradio REMIX",
+    "code": "0nlineradio",
+    "description": "charts · dance · Germany · 192k",
+    "url": "https://stream.0nlineradio.com/remix?ref=radiobrowser",
+    "group": "Electronic",
+    "country": "DE"
+  },
+  {
+    "name": "0 N - Electro on Radio",
+    "code": "0 N - Electro on",
+    "description": "dance · deephouse · Germany · 128k",
+    "url": "https://0n-electro.radionetz.de/0n-electro.mp3",
+    "group": "Electronic",
+    "country": "DE",
+    "logo": "https://www.0nradio.com/logos/0n-electro_600x600.jpg"
+  },
+  {
+    "name": "__CLUB__ by rautemusik (rm.fm)",
+    "code": "__CLUB__ by",
+    "description": "dance · deejay · Germany · 192k",
+    "url": "https://club-high.rautemusik.fm/?ref=radiobrowser",
+    "group": "Electronic",
+    "country": "DE"
+  },
+  {
+    "name": "100 BEST IBIZA DEEP HOUSE",
+    "code": "100 BEST IBIZA",
+    "description": "chill · chill house · Canada · 128k",
+    "url": "https://stream.zeno.fm/lwv6zqgtv1dtv",
+    "group": "Electronic",
+    "country": "CA",
+    "logo": "https://static.wixstatic.com/media/f361b3_cf8747dc2b804de09c56359c324dd1f5~mv2.jpg"
+  },
+  {
+    "name": "Bossa Jazz Brasil",
+    "code": "Bossa Jazz",
+    "description": "bossa nova · jazz · Brazil · 64k",
+    "url": "https://centova5.transmissaodigital.com:20104/live",
+    "group": "Jazz",
+    "country": "BR",
+    "logo": "https://bossajazzbrasil.com/wp-content/uploads/2020/12/cropped-bjs-app-180x180.png"
+  },
+  {
+    "name": "Instrumental Jazz",
+    "code": "Instrumental",
+    "description": "instrumental · jazz · The Russian Federation · 128k",
+    "url": "https://jfm1.hostingradio.ru:14536/ijstream.mp3",
+    "group": "Jazz",
+    "country": "RU",
+    "logo": "https://radiojazzfm.ru/favicons/apple-touch-icon.png"
+  },
+  {
+    "name": "0 N - Smooth Jazz on Radio",
+    "code": "0 N - Smooth",
+    "description": "chillout · easy listening · Germany · 64k",
+    "url": "https://0n-smoothjazz.radionetz.de/0n-smoothjazz.aac",
+    "group": "Jazz",
+    "country": "DE",
+    "logo": "https://www.0nradio.com/logos/0n-smooth-jazz_600x600.jpg"
+  },
+  {
+    "name": "Smooth Jazz Lounge",
+    "code": "Smooth Jazz",
+    "description": "jazz · smooth jazz · Brazil · 128k",
+    "url": "https://radio4.vip-radios.fm:18060/stream-128kmp3-SmoothJazzLounge",
+    "group": "Jazz",
+    "country": "BR"
+  },
+  {
+    "name": "Jazzradio.fr Jazz & Classique",
+    "code": "Jazzradio.fr",
+    "description": "classic · jazz · France · 128k",
+    "url": "https://jazz-wr17.ice.infomaniak.ch/jazz-wr17-128.mp3",
+    "group": "Jazz",
+    "country": "FR"
+  },
+  {
+    "name": "SmoothJazz.com.pl 320k MP3",
+    "code": "SmoothJazz.com.p",
+    "description": "jazz · smooth jazz · Poland · 320k",
+    "url": "https://bcast.vigormultimedia.com:48888/sjcompl320mp3",
+    "group": "Jazz",
+    "country": "PL"
+  },
+  {
+    "name": "JazzRadio 106.8 Berlin",
+    "code": "106.8",
+    "description": "jazz · Germany · 192k",
+    "url": "https://streaming.radio.co/s774887f7b/listen",
+    "group": "Jazz",
+    "country": "DE",
+    "logo": "https://jazzradio.net/wp-content/uploads/2023/06/jr-disc-10k-black.png"
+  },
+  {
+    "name": "FIP Pop",
+    "code": "FIP Pop",
+    "description": "aac · pop · France · 192k",
+    "url": "https://icecast.radiofrance.fr/fippop-hifi.aac",
+    "group": "Jazz",
+    "country": "FR",
+    "logo": "https://www.fip.fr/dist/favicons/logo-120.png"
+  },
+  {
+    "name": "WBGO Jazz 88.3 FM",
+    "code": "88.3",
+    "description": "jazz · USA · 128k",
+    "url": "https://ais-sa8.cdnstream1.com/3629_128.mp3",
+    "group": "Jazz",
+    "country": "US",
+    "logo": "https://npr.brightspotcdn.com/dims4/default/76ee71f/2147483647/strip/true/crop/200x100+0+0/resize/400x200!/format/webp/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2Fa7%2F2f%2Fbfa4b00449099118e45fefe81fe8%2Fwbgo-logo-200x100.png"
+  },
+  {
+    "name": "Jazz FM",
+    "code": "Jazz FM",
+    "description": "jazz · Republic Of North Macedonia · 320k",
+    "url": "https://radio.jazzfm.mk/listen/jazzfm/live",
+    "group": "Jazz",
+    "country": "MK",
+    "logo": "https://jazzfm.mk/favicon.png"
+  },
+  {
+    "name": "Jazz24",
+    "code": "Jazz24",
+    "description": "Jazz · USA · 256k",
+    "url": "https://knkx-live-a.edge.audiocdn.com/6285_256k",
+    "group": "Jazz",
+    "country": "US",
+    "logo": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.ugUKdyft-8Fo--PIPAXzGgAAAA%3Fpid%3DApi&f=1&ipt=f09f5c58d86f560fb392db2af56b9af0d7f4c9f2ae3401b90488c35484eba2cb&ipo=images"
+  },
+  {
+    "name": "Radio Swiss Jazz",
+    "code": "Radio Swiss Jazz",
+    "description": "jazz · 128k",
+    "url": "https://stream.srg-ssr.ch/m/rsj/mp3_128",
+    "group": "Jazz",
+    "country": "",
+    "logo": "https://www.radioswissjazz.ch/social-media/rsj-web.png"
+  },
+  {
+    "name": "181.FM - True Blues",
+    "code": "181.FM - True",
+    "description": "blues · waynesboro · USA · 128k",
+    "url": "https://listen.181fm.com/181-blues_128k.mp3",
+    "group": "Blues",
+    "country": "US",
+    "logo": "https://www.181.fm/favicon.ico"
+  },
+  {
+    "name": "Pinguin Blues",
+    "code": "Pinguin Blues",
+    "description": "blues · blues rock · The Netherlands · 192k",
+    "url": "https://samcloud.spacial.com/api/listen?sid=93462&m=sc&rid=168006",
+    "group": "Blues",
+    "country": "NL"
+  },
+  {
+    "name": "Радио Монте Карло - Wonderful Blues",
+    "code": "Радио Монте",
+    "description": "blues · The Russian Federation · 96k",
+    "url": "https://mc-blues.hostingradio.ru/blues96.aacp",
+    "group": "Blues",
+    "country": "RU"
+  },
+  {
+    "name": "A MISSISSIPPI BLUES",
+    "code": "A MISSISSIPPI",
+    "description": "blues · bluesrock · Canada · 320k",
+    "url": "https://cast1.torontocast.com:4450/;?type=http&nocache=1745625391",
+    "group": "Blues",
+    "country": "CA",
+    "logo": "https://d1ujqdpfgkvqfi.cloudfront.net/favicon-generator/htdocs/favicons/2025-04-26/7358e7e8c2649a65c1a9d821887e32e3.ico.png"
+  },
+  {
+    "name": "Radio Art Acoustic Blues",
+    "code": "Radio Art",
+    "description": "acoustic · blues · USA · 96k",
+    "url": "https://live.radioart.com/fAcoustic_blues.mp3",
+    "group": "Blues",
+    "country": "US",
+    "logo": "https://radioart.com/templates/yootheme/vendor/yootheme/theme-joomla/assets/images/favicon.png"
+  },
+  {
+    "name": "joint radio Blues Rock",
+    "code": "joint radio",
+    "description": "60s · 70s · Israel · 320k",
+    "url": "https://jointil.com/stream-blues",
+    "group": "Blues",
+    "country": "IL",
+    "logo": "https://www.jointil.com/broadcast/images/joint.radio350X350.png"
+  },
+  {
+    "name": "0 N - Blues on Radio",
+    "code": "0 N - Blues on",
+    "description": "blues · r&b · Germany · 128k",
+    "url": "https://0n-blues.radionetz.de/0n-blues.mp3",
+    "group": "Blues",
+    "country": "DE",
+    "logo": "https://www.0nradio.com/logos/0n-blues_600x600.jpg"
+  },
+  {
+    "name": "JazzRadio.fr Blues",
+    "code": "JazzRadio.fr",
+    "description": "blues · France · 128k",
+    "url": "https://jazzblues.ice.infomaniak.ch/jazzblues-high.mp3",
+    "group": "Blues",
+    "country": "FR",
+    "logo": "https://www.jazzradio.fr/media/radio/thumb/100x100_blues.png"
+  },
+  {
+    "name": "Blues Radio",
+    "code": "Blues Radio",
+    "description": "Blues · Greece · 320k",
+    "url": "https://i4.streams.ovh/sc/bluesrad/stream",
+    "group": "Blues",
+    "country": "GR",
+    "logo": "https://i1.wp.com/bluesradio.gr/wp-content/uploads/2021/06/cropped-24-7bug.png?fit=180%2c180&#038;ssl=1"
+  },
+  {
+    "name": "70s 80s Disco Funk ModernSoul Boogie",
+    "code": "70s 80s Disco",
+    "description": "1970s · 1980s · USA · 192k",
+    "url": "https://discofunk.streamingmedia.it/usa",
+    "group": "Soul & Funk",
+    "country": "US"
+  },
+  {
+    "name": "_Funky Corner Radio (USA)",
+    "code": "_Funky Corner",
+    "description": "70s · 70s disco · USA · 192k",
+    "url": "https://ais-sa2.cdnstream1.com/2447_192.mp3",
+    "group": "Soul & Funk",
+    "country": "US"
+  },
+  {
+    "name": "B4B Radio DISCO FUNK",
+    "code": "B4B Radio DISCO",
+    "description": "dance classics · disco funk · France · 128k",
+    "url": "https://eu10.fastcast4u.com:8120/",
+    "group": "Soul & Funk",
+    "country": "FR"
+  },
+  {
+    "name": "181.FM - Soul",
+    "code": "181.FM - Soul",
+    "description": "soul · waynesboro · USA · 128k",
+    "url": "https://listen.181fm.com/181-soul_128k.mp3",
+    "group": "Soul & Funk",
+    "country": "US",
+    "logo": "https://www.181.fm/favicon.ico"
+  },
+  {
+    "name": "Funkstar Radio",
+    "code": "Funkstar Radio",
+    "description": "disco · discomusic 70 · Czechia · 192k",
+    "url": "https://funkstar.radioca.st/stream",
+    "group": "Soul & Funk",
+    "country": "CZ",
+    "logo": "https://www.funkstar.eu/wp-content/uploads/2018/12/FS_144-144.png"
+  },
+  {
+    "name": "SomaFM Seven Inch Soul",
+    "code": "SomaFM Seven",
+    "description": "soul · USA · 160k",
+    "url": "https://ice6.somafm.com/7soul-128-mp3",
+    "group": "Soul & Funk",
+    "country": "US",
+    "logo": "https://somafm.com/img3/7soul-400.jpg"
+  },
+  {
+    "name": "0 N - Disco on Radio",
+    "code": "0 N - Disco on",
+    "description": "70er · 70s · Germany · 128k",
+    "url": "https://0n-disco.radionetz.de/0n-disco.mp3",
+    "group": "Soul & Funk",
+    "country": "DE",
+    "logo": "https://www.0nradio.com/logos/0n-disco_600x600.jpg"
+  },
+  {
+    "name": "COOLFM Funky&Soul",
+    "code": "COOLFM",
+    "description": "funky · soul · Hungary · 128k",
+    "url": "https://mediagw.e-tiger.net/stream/zc25",
+    "group": "Soul & Funk",
+    "country": "HU"
+  },
+  {
+    "name": "SOUL RADIO Only Classic Soul",
+    "code": "SOUL RADIO Only",
+    "description": "50s · 60s · UK · 194k",
+    "url": "https://listen.soulradio.uk/uk",
+    "group": "Soul & Funk",
+    "country": "GB"
+  },
+  {
+    "name": "SOUL RADIO Classics",
+    "code": "SOUL RADIO",
+    "description": "classic soul · soul · USA · 194k",
+    "url": "https://listen.soulradio.us/us",
+    "group": "Soul & Funk",
+    "country": "US"
+  },
+  {
+    "name": "REGGAE CHILL CAFE",
+    "code": "REGGAE CHILL",
+    "description": "chill · chillout · Canada · 128k",
+    "url": "https://maggie.torontocast.com:2020/stream/reggaechillcafe",
+    "group": "Reggae",
+    "country": "CA"
+  },
+  {
+    "name": "SomaFM Heavyweight Reggae",
+    "code": "SomaFM",
+    "description": "reggae · rocksteady · USA · 320k",
+    "url": "https://ice5.somafm.com/reggae-256-mp3",
+    "group": "Reggae",
+    "country": "US",
+    "logo": "https://somafm.com/img3/reggae400.jpg"
+  },
+  {
+    "name": "181.FM - Reggae Roots",
+    "code": "181.FM - Reggae",
+    "description": "reggae · waynesboro · USA · 128k",
+    "url": "https://listen.181fm.com/181-reggae_128k.mp3",
+    "group": "Reggae",
+    "country": "US",
+    "logo": "https://www.181.fm/favicon.ico"
+  },
+  {
+    "name": "Reggae.fr",
+    "code": "Reggae.fr",
+    "description": "dub · reggae · France · 128k",
+    "url": "https://listen.radioking.com/radio/50473/stream/87415",
+    "group": "Reggae",
+    "country": "FR"
+  },
+  {
+    "name": "SomaFM Dub Step Beyond",
+    "code": "SomaFM Dub Step",
+    "description": "deep bass · dub · USA · 128k",
+    "url": "https://ice2.somafm.com/dubstep-128-mp3",
+    "group": "Reggae",
+    "country": "US",
+    "logo": "https://somafm.com/img3/dubstep-400.jpg"
+  },
+  {
+    "name": "Radio Reggae Brasil",
+    "code": "Radio Reggae",
+    "description": "reggae · Brazil · 128k",
+    "url": "https://casthttps.suaradionanet.net/13805/stream",
+    "group": "Reggae",
+    "country": "BR",
+    "logo": "https://manager.suaradionanet.net/storage/radios/reggaebrasil/site_basic/63f193d9235468.08684969.png"
+  },
+  {
+    "name": "Mountain Reggae Radio",
+    "code": "Mountain Reggae",
+    "description": "hip hop · reggae · Austria · 128k",
+    "url": "https://mountainreggaeradio.stream.laut.fm/mountainreggaeradio",
+    "group": "Reggae",
+    "country": "AT"
+  },
+  {
+    "name": "RTBF Classic 21 - Reggae",
+    "code": "RTBF Classic 21",
+    "description": "reggae · roots reggae · Belgium",
+    "url": "https://radios.rtbf.be/wr-eventradio-128.mp3",
+    "group": "Reggae",
+    "country": "BE",
+    "logo": "https://www.rtbf.be/favicon.ico"
+  },
+  {
+    "name": "OUI FM REGGAE",
+    "code": "OUI FM REGGAE",
+    "description": "reggae · France · 128k",
+    "url": "https://ouifmganja.ice.infomaniak.ch/ouifmganja-128.mp3",
+    "group": "Reggae",
+    "country": "FR",
+    "logo": "https://bocir-prod-bucket.s3.amazonaws.com/radios/oui-fm/radiostream/ufIfkfDXSl/vignette.png"
+  },
+  {
+    "name": "1 reggae joint",
+    "code": "1 reggae joint",
+    "description": "dub · dub reggae · Germany · 320k",
+    "url": "https://jointil.com/stream-reggae",
+    "group": "Reggae",
+    "country": "DE",
+    "logo": "https://www.jointil.com/broadcast/images/joint.radio330X330.png"
+  },
+  {
+    "name": "Tropical 100 Salsa",
+    "code": "Tropical 100",
+    "description": "salsa · The Dominican Republic · 128k",
+    "url": "https://stream-107.zeno.fm/cjgfujr8yhbvv?zs=VsqKiPTASc-XIz7P9HnYjQ",
+    "group": "Latin",
+    "country": "DO",
+    "logo": "https://cdn-profiles.tunein.com/s102276/images/logod.png?t=637903326480000000"
+  },
+  {
+    "name": "La Salsa Maestra",
+    "code": "La Salsa Maestra",
+    "description": "afro latin music · salsa · Peru · 128k",
+    "url": "https://stream.zeno.fm/c1skkw28pfeuv",
+    "group": "Latin",
+    "country": "PE",
+    "logo": "https://i.imgur.com/rMKkm0b.png"
+  },
+  {
+    "name": "Latina bachata",
+    "code": "Latina bachata",
+    "description": "bachata · France · 128k",
+    "url": "https://latinabachata.ice.infomaniak.ch/latinabachata.mp3",
+    "group": "Latin",
+    "country": "FR"
+  },
+  {
+    "name": "Tropical 100 Mix",
+    "code": "Tropical 100 Mix",
+    "description": "bachata · latin · The Dominican Republic · 128k",
+    "url": "https://stream-107.zeno.fm/esgo1lafgtstv?zs=o1G7UIERS3Gdtn2B7Jdt7Q",
+    "group": "Latin",
+    "country": "DO"
+  },
+  {
+    "name": "Caracas. Salsa Romántica...",
+    "code": "Caracas. Salsa",
+    "description": "latino · salsa · Bolivarian Republic Of Venezuela · 128k",
+    "url": "https://stream-285.surfernetwork.com/ftly191pojttv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJmdGx5MTkxcG9qdHR2IiwiaG9zdCI6InN0cmVhbS0yODUuc3VyZmVybmV0d29yay5jb20iLCJ0bSI6ZmFsc2UsInJ0dGwiOjUsImp0aSI6ImxaZjR3RWdYUW02YTdhc05GUENoYWciLCJpYXQiOjE3OTI2NzA5MjYsImV4cCI6MTc5MjY3MDk4Nn0.KI19llCUkRwkyl_DQJZj4YUDFvbFFwUYorxj9SNZZcY",
+    "group": "Latin",
+    "country": "VE",
+    "logo": "https://zenoimages.s3.us-west-001.backblazeb2.com/0554b123-d7ae-4423-82d8-a969a6f97871/cards/3b6a52c2-0705-4968-8d5e-a43023c4c452"
+  },
+  {
+    "name": "Latina 104",
+    "code": "Latina 104",
+    "description": "merengue · merengue bachata · The Dominican Republic · 128k",
+    "url": "https://radio.dominiserver.com/proxy/latina104?mp=/stream",
+    "group": "Latin",
+    "country": "DO"
+  },
+  {
+    "name": "Colombia Salsa Dura",
+    "code": "Colombia Salsa",
+    "description": "bomba · fania · Colombia · 128k",
+    "url": "https://play10.tikast.com/proxy/colsalsadura?mp=/stream",
+    "group": "Latin",
+    "country": "CO",
+    "logo": "https://colombiacrossover.com/wp-content/uploads/Logo-colombia-salsa-dura-png-1024x985.png"
+  },
+  {
+    "name": "Radio Salsa Peru",
+    "code": "Radio Salsa Peru",
+    "description": "salsa · salsa colombiana · Peru · 192k",
+    "url": "https://stream.zeno.fm/f19941g3teruv",
+    "group": "Latin",
+    "country": "PE",
+    "logo": "https://static.mytuner.mobi/media/tvos_radios/594/radio-salsa-peru.de606443.jpg"
+  },
+  {
+    "name": "105 Salsa",
+    "code": "105 Salsa",
+    "description": "salsa · El Salvador · 128k",
+    "url": "https://stream.zeno.fm/mdn371ycuwzuv",
+    "group": "Latin",
+    "country": "SV"
+  },
+  {
+    "name": "Radio Cumbia Mix",
+    "code": "Radio Cumbia Mix",
+    "description": "cumbia peruana · merengue · Peru · 128k",
+    "url": "https://mdstrm.com/audio/6598b6ab95a235085823b24f/icecast.audio",
+    "group": "Latin",
+    "country": "PE"
+  },
+  {
+    "name": "Venice Classic Radio",
+    "code": "Venice Classic",
+    "description": "classical · Italy · 128k",
+    "url": "https://uk2.streamingpulse.com/ssl/vcr1",
+    "group": "Classical",
+    "country": "IT",
+    "logo": "https://www.veniceclassicradio.eu/player/new/image/a.png"
+  },
+  {
+    "name": "France Musique Opera",
+    "code": "France Musique",
+    "description": "opera · public radio · France · 192k",
+    "url": "https://icecast.radiofrance.fr/francemusiqueopera-hifi.aac",
+    "group": "Classical",
+    "country": "FR",
+    "logo": "https://www.radiofrance.fr/dist/favicons/logo-120.png"
+  },
+  {
+    "name": "Classicnl Opera",
+    "code": "Classicnl Opera",
+    "description": "classical · opera · The Netherlands · 256k",
+    "url": "https://classic.nl/streams/?s=opera",
+    "group": "Classical",
+    "country": "NL"
+  },
+  {
+    "name": "Classical Radio - Verdi",
+    "code": "Classical Radio",
+    "description": "opera · The United Arab Emirates · 128k",
+    "url": "https://drive.uber.radio/uber/crverdi/icecast.audio",
+    "group": "Classical",
+    "country": "AE",
+    "logo": "https://cdn.audioaddict.com/classicalradio.com/assets/apple-touch-icon-120x120-7922555f3bb73e6e492c46abda410434ea8ca2dd3349ce116a1511dde6f4f584.png"
+  },
+  {
+    "name": "Clasic Radio_Opera -București",
+    "code": "Clasic",
+    "description": "classical music · opera · Romania · 192k",
+    "url": "https://live.radioclasic.com/listen/radio_clasic_opera/live.mp3",
+    "group": "Classical",
+    "country": "RO",
+    "logo": "https://www.clasicradio.ro/logo/opera.jpg"
+  },
+  {
+    "name": "WQXR",
+    "code": "WQXR",
+    "description": "classical · USA · 128k",
+    "url": "https://stream.wqxr.org/wqxr-web?nyprBrowserId=32c67956bf1d5600",
+    "group": "Classical",
+    "country": "US",
+    "logo": "https://media.wnyc.org/i/500/500/c/80/1/wqxr_1_1.png"
+  },
+  {
+    "name": "YourClassical",
+    "code": "YourClassical",
+    "description": "classical · USA · 128k",
+    "url": "https://ycradio.stream.publicradio.org/ycradio.aac",
+    "group": "Classical",
+    "country": "US",
+    "logo": "https://www.yourclassical.org/apple-touch-icon.png"
+  },
+  {
+    "name": "classic nl mind radio",
+    "code": "classic nl mind",
+    "description": "classic hits · classical · The Netherlands · 256k",
+    "url": "https://stream.classic.nl/classicnl-mindradio.mp3",
+    "group": "Classical",
+    "country": "NL",
+    "logo": "https://www.classic.nl/images/logo-footer.png"
+  },
+  {
+    "name": "SomaFM Space Station Soma",
+    "code": "SomaFM Space",
+    "description": "ambient · electronica · USA · 128k",
+    "url": "https://ice2.somafm.com/spacestation-128-aac",
+    "group": "Ambient & Chill",
+    "country": "US",
+    "logo": "https://somafm.com/img3/spacestation-400.png"
+  },
+  {
+    "name": "0 N - Chillout on Radio",
+    "code": "0 N - Chillout",
+    "description": "ambient · chillout · Germany · 64k",
+    "url": "https://0n-chillout.radionetz.de/0n-chillout.aac",
+    "group": "Ambient & Chill",
+    "country": "DE",
+    "logo": "https://www.0nradio.com/logos/0n-chillout_600x600.jpg"
+  },
+  {
+    "name": "SomaFM Drone Zone",
+    "code": "SomaFM Drone",
+    "description": "ambient · atmospheric · USA · 128k",
+    "url": "https://ice2.somafm.com/dronezone-128-mp3",
+    "group": "Ambient & Chill",
+    "country": "US",
+    "logo": "https://somafm.com/img3/dronezone-400.jpg"
+  },
+  {
+    "name": "Nature Radio Rain",
+    "code": "Nature Radio",
+    "description": "ambient · nature · Canada · 128k",
+    "url": "https://maggie.torontocast.com:2020/stream/natureradiorain",
+    "group": "Ambient & Chill",
+    "country": "CA"
+  },
+  {
+    "name": "Chillout Ibiza FM",
+    "code": "Chillout Ibiza",
+    "description": "chillout · relaxing · UK · 192k",
+    "url": "https://edge3.peta.live365.net/b05055_128mp3",
+    "group": "Ambient & Chill",
+    "country": "GB"
+  },
+  {
+    "name": "Relax FM Chillout",
+    "code": "Relax FM",
+    "description": "chill · chillout · The Russian Federation",
+    "url": "https://pub0201.101.ru/stream/trust/mp3/128/24?",
+    "group": "Ambient & Chill",
+    "country": "RU",
+    "logo": "https://www.radiobells.com/stations/relaxfmchillout.webp"
+  },
+  {
+    "name": "SomaFM Deep Space One",
+    "code": "SomaFM Deep",
+    "description": "ambient · electronic · USA · 32k",
+    "url": "https://ice6.somafm.com/deepspaceone-32-aac",
+    "group": "Ambient & Chill",
+    "country": "US",
+    "logo": "https://somafm.com/img3/deepspaceone-400.jpg"
+  },
+  {
+    "name": "AIRPORT LOUNGE RADIO",
+    "code": "AIRPORT LOUNGE",
+    "description": "aereoporto · airport · Canada · 128k",
+    "url": "https://az1.mediacp.eu/listen/airport-lounge-radio/radio.mp3",
+    "group": "Ambient & Chill",
+    "country": "CA",
+    "logo": "https://favicon-generator.org/favicon-generator/htdocs/favicons/2023-12-16/9274e8a4803971186ff5c45359ab77a4.ico.png"
+  },
+  {
+    "name": "Lounge.FM - 100% Austria",
+    "code": "Lounge.FM - 100%",
+    "description": "downtempo · easy listening · Austria · 128k",
+    "url": "https://s35.derstream.net/100austria.mp3",
+    "group": "Ambient & Chill",
+    "country": "AT",
+    "logo": "https://www.lounge.fm/wp-content/uploads/2014/06/loungefm_logo_colour2-300x300.jpg"
+  },
+  {
+    "name": "REYFM - #chillout",
+    "code": "REYFM",
+    "description": "chillout · rey · 192k",
+    "url": "https://listen.reyfm.de/chillout_192kbps.mp3",
+    "group": "Ambient & Chill",
+    "country": "",
+    "logo": "https://www.reyfm.de/_nuxt/icons/icon_64x64.88ab9f.png"
+  }
+]
