@@ -84,6 +84,8 @@ public final class PlaybackService extends MediaLibraryService {
         super.onCreate();
         loadStations();
         player = new ExoPlayer.Builder(this).build();
+        // Radio categories are continuous dials: keep both car skip controls available at either end.
+        player.setRepeatMode(Player.REPEAT_MODE_ALL);
         player.setAudioAttributes(new AudioAttributes.Builder()
                 .setUsage(C.USAGE_MEDIA)
                 .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
