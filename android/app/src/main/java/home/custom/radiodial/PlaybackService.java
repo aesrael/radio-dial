@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 
 import androidx.annotation.Nullable;
 import androidx.media3.common.AudioAttributes;
@@ -17,6 +18,7 @@ import androidx.media3.session.LibraryResult;
 import androidx.media3.session.MediaLibraryService;
 import androidx.media3.session.MediaSession;
 import androidx.media3.session.SessionError;
+import androidx.media3.session.MediaSession.MediaItemsWithStartPosition;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.Futures;
@@ -32,6 +34,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.nio.charset.StandardCharsets;
 
 /** Shared background player and browsable station library for the app and Android Auto. */
 @UnstableApi
@@ -64,7 +67,9 @@ public final class PlaybackService extends MediaLibraryService {
             logo = json.optString("logo", "").trim();
         }
 
-        String id() { return "station:" + url; }
+        String id(String collection) {
+            return "station/" + encode(collection) + "/" + encode(url);
+        }
         boolean matches(String q) {
             String needle = q.toLowerCase(Locale.ROOT);
             return name.toLowerCase(Locale.ROOT).contains(needle)
@@ -178,7 +183,39 @@ public final class PlaybackService extends MediaLibraryService {
         return new MediaItem.Builder().setMediaId(id).setMediaMetadata(metadata.build()).build();
     }
 
-    private MediaItem stationItem(Station station) {
+    private static String encode(String value) {
+        return Base64.encodeToString(value.getBytes(StandardCharsets.UTF_8),
+                Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING);
+    }
+
+    private static String decode(String value) {
+        try { return new String(Base64.decode(value, Base64.URL_SAFE), StandardCharsets.UTF_8); }
+        catch (IllegalArgumentException ignored) { return ""; }
+    }
+
+    private String collectionFromId(String id) {
+        if (id == null || !id.startsWith("station/")) return null;
+        String[] parts = id.split("/", 3);
+        return parts.length == 3 ? decode(parts[1]) : null;
+    }
+
+    private String urlFromId(String id) {
+        if (id == null) return "";
+        if (id.startsWith("station/")) {
+            String[] parts = id.split("/", 3);
+            return parts.length == 3 ? decode(parts[2]) : "";
+        }
+        return id.startsWith("station:") ? id.substring("station:".length()) : "";
+    }
+
+    private Station stationByUrl(String url) {
+        for (Station station : stations) if (station.url.equals(url)) return station;
+        return null;
+    }
+
+    private MediaItem stationItem(Station station) { return stationItem(station, ALL); }
+
+    private MediaItem stationItem(Station station, String collection) {
         MediaMetadata.Builder metadata = new MediaMetadata.Builder()
                 .setTitle(station.name)
                 .setSubtitle(station.description)
@@ -186,9 +223,14 @@ public final class PlaybackService extends MediaLibraryService {
                 .setAlbumTitle("Radio Dial · " + station.group)
                 .setIsBrowsable(false)
                 .setIsPlayable(true);
-        if (station.logo.startsWith("https://")) metadata.setArtworkUri(Uri.parse(station.logo));
+        if (station.logo.startsWith("https://")) {
+            Uri artwork = new Uri.Builder().scheme("content")
+                    .authority(getPackageName() + ".artwork")
+                    .appendPath(encode(station.url)).build();
+            metadata.setArtworkUri(artwork);
+        }
         return new MediaItem.Builder()
-                .setMediaId(station.id())
+                .setMediaId(station.id(collection))
                 .setUri(station.url)
                 .setMediaMetadata(metadata.build())
                 .build();
@@ -204,14 +246,15 @@ public final class PlaybackService extends MediaLibraryService {
                 if (station.group.equals(group)) return browseItem(id, group, "Station collection", null);
             }
         }
-        for (Station station : stations) if (station.id().equals(id)) return stationItem(station);
+        Station station = stationByUrl(urlFromId(id));
+        if (station != null) return stationItem(station, collectionFromId(id) == null ? ALL : collectionFromId(id));
         return null;
     }
 
     private List<MediaItem> rootChildren() {
         List<MediaItem> result = new ArrayList<>();
-        result.add(browseItem(ALL, "All stations", stations.size() + " stations", null));
         result.add(browseItem(FAVOURITES, "Favourites", "Saved stations", null));
+        result.add(browseItem(ALL, "All stations", stations.size() + " stations", null));
         for (String group : stationGroups()) result.add(browseItem("group:" + group, group, "Station collection", null));
         return result;
     }
@@ -225,10 +268,16 @@ public final class PlaybackService extends MediaLibraryService {
             if (ALL.equals(parentId)
                     || (FAVOURITES.equals(parentId) && favouriteNames.contains(station.name))
                     || parentId.equals("group:" + station.group)) {
-                result.add(stationItem(station));
+                result.add(stationItem(station, parentId));
             }
         }
         return result;
+    }
+
+    private MediaItem resolve(MediaItem item) {
+        Station station = stationByUrl(urlFromId(item.mediaId));
+        return station == null ? item : stationItem(station,
+                collectionFromId(item.mediaId) == null ? ALL : collectionFromId(item.mediaId));
     }
 
     private List<MediaItem> search(String query) {
@@ -239,6 +288,40 @@ public final class PlaybackService extends MediaLibraryService {
     }
 
     private final class LibraryCallback implements MediaLibrarySession.Callback {
+        @Override
+        public ListenableFuture<List<MediaItem>> onAddMediaItems(
+                MediaSession session, MediaSession.ControllerInfo controller, List<MediaItem> mediaItems) {
+            List<MediaItem> resolved = new ArrayList<>();
+            for (MediaItem item : mediaItems) resolved.add(resolve(item));
+            return Futures.immediateFuture(resolved);
+        }
+
+        @Override
+        public ListenableFuture<MediaItemsWithStartPosition> onSetMediaItems(
+                MediaSession session, MediaSession.ControllerInfo controller, List<MediaItem> mediaItems,
+                int startIndex, long startPositionMs) {
+            if (mediaItems.size() == 1) {
+                MediaItem requested = mediaItems.get(0);
+                String collection = collectionFromId(requested.mediaId);
+                Station selected = stationByUrl(urlFromId(requested.mediaId));
+                if (selected != null) {
+                    if (collection == null || children(collection).stream()
+                            .noneMatch(item -> selected.url.equals(urlFromId(item.mediaId)))) {
+                        collection = "group:" + selected.group;
+                    }
+                    List<MediaItem> queue = children(collection);
+                    for (int i = 0; i < queue.size(); i++) {
+                        if (selected.url.equals(urlFromId(queue.get(i).mediaId))) {
+                            return Futures.immediateFuture(new MediaItemsWithStartPosition(queue, i, startPositionMs));
+                        }
+                    }
+                }
+            }
+            List<MediaItem> resolved = new ArrayList<>();
+            for (MediaItem item : mediaItems) resolved.add(resolve(item));
+            return Futures.immediateFuture(new MediaItemsWithStartPosition(resolved, startIndex, startPositionMs));
+        }
+
         @Override
         public ListenableFuture<LibraryResult<MediaItem>> onGetLibraryRoot(
                 MediaLibrarySession session, MediaSession.ControllerInfo browser,
