@@ -17,6 +17,12 @@
         <meta-data
             android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc" />
+        <meta-data
+            android:name="com.google.android.gms.car.application.theme"
+            android:resource="@style/RadioDialCarTheme" />
+        <meta-data
+            android:name="androidx.car.app.TintableAttributionIcon"
+            android:resource="@drawable/ic_radio_attribution" />
 
         <activity
             android:name=".MainActivity"
@@ -33,6 +39,7 @@
         <service
             android:name=".PlaybackService"
             android:exported="true"
+            android:icon="@drawable/ic_radio"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
                 <action android:name="androidx.media3.session.MediaLibraryService" />
