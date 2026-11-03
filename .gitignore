@@ -4,5 +4,4 @@
 __pycache__/
 android/.gradle/
 android/**/build/
-android/debug.keystore
 android/local.properties
