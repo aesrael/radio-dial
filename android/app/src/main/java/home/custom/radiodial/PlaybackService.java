@@ -1,5 +1,6 @@
 package home.custom.radiodial;
 
+import android.app.PendingIntent;
 import android.content.SharedPreferences;
 import android.content.Intent;
 import android.net.Uri;
@@ -91,7 +92,12 @@ public final class PlaybackService extends MediaLibraryService {
                 .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
                 .build(), true);
         player.setHandleAudioBecomingNoisy(true);
-        session = new MediaLibrarySession.Builder(this, player, new LibraryCallback()).build();
+        Intent launch = new Intent(this, MainActivity.class);
+        PendingIntent sessionActivity = PendingIntent.getActivity(this, 0, launch,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        session = new MediaLibrarySession.Builder(this, player, new LibraryCallback())
+                .setSessionActivity(sessionActivity)
+                .build();
     }
 
     @Nullable
