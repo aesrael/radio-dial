@@ -545,6 +545,12 @@ public class MainActivity extends Activity {
         liveBadge = text("", sp(10), muted_, Typeface.BOLD);
         liveBadge.setGravity(Gravity.CENTER);
         liveBadge.setPadding(dp(9), dp(6), dp(9), dp(6));
+        liveBadge.setFocusable(true);
+        liveBadge.setClickable(true);
+        liveBadge.setContentDescription("Jump to live");
+        liveBadge.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { snapToLive(); }
+        });
         updateLiveBadge();
         titleRow.addView(liveBadge, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, dp(32)));
@@ -802,6 +808,12 @@ public class MainActivity extends Activity {
         live.setGravity(Gravity.CENTER);
         live.setPadding(px(20), px(10), px(20), px(10));
         live.setBackground(rect(cardBg, px(40), px(2), ink));
+        live.setFocusable(true);
+        live.setClickable(true);
+        live.setContentDescription("Jump to live");
+        live.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { snapToLive(); }
+        });
         topline.addView(live, lp(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0, 0, 0));
         main.addView(topline);
@@ -1219,6 +1231,25 @@ public class MainActivity extends Activity {
         if (shown.isEmpty() || tuned == null) return;
         if (playing == tuned && wantPlaying) userStop();
         else play(tuned);
+    }
+
+    /** Jump to the live edge. Progressive Icecast streams resume from a stale
+     *  buffer after a background pause, so a tap reconnects to live. HLS live
+     *  seeks within the window when possible. */
+    private void snapToLive() {
+        if (playing == null || !wantPlaying) {
+            if (tuned != null) play(tuned);
+            return;
+        }
+        if (player != null && player.getCurrentMediaItem() != null
+                && player.isCurrentMediaItemLive() && player.isCurrentMediaItemSeekable()) {
+            player.seekToDefaultPosition();
+            status = "Jumped to live — " + playing.name + ".";
+            refreshCard();
+        } else {
+            status = "Catching up to live — " + playing.name + "…";
+            startPlay(playing);
+        }
     }
 
     private void tuneStep(int dir, boolean thenPlay) {
