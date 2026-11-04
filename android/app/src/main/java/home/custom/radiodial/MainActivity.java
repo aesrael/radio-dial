@@ -159,6 +159,9 @@ public class MainActivity extends Activity {
     private TextView statusText, errorText, cardName, cardDesc, badgeCode, sectionTitle;
     private TextView playBtn, favBtn, navStations, navFavourites, deadChip;
     private TextView liveBadge;
+    private LinearLayout liveBadgeBox;
+    private PulseDot liveDot;
+    private AudioBars audioBars;
     private ImageView badgeLogo;
     private LinearLayout chipBox;
     private final List<TextView> chips = new ArrayList<TextView>();
@@ -217,6 +220,17 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         // Playback belongs to PlaybackService and continues for Android Auto / media controls.
+        // Freeze the header animations so they don't burn battery off-screen.
+        if (liveDot != null) liveDot.pause();
+        if (audioBars != null) audioBars.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (liveDot != null) liveDot.resume();
+        if (audioBars != null) audioBars.resume();
+        updateLiveBadge();
     }
 
     @Override
@@ -542,18 +556,38 @@ public class MainActivity extends Activity {
                 ViewGroup.LayoutParams.WRAP_CONTENT, 0, dp(4), 0, 0));
         titleRow.addView(titleStack, new LinearLayout.LayoutParams(0,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-        liveBadge = text("", sp(10), muted_, Typeface.BOLD);
-        liveBadge.setGravity(Gravity.CENTER);
-        liveBadge.setPadding(dp(9), dp(6), dp(9), dp(6));
-        liveBadge.setFocusable(true);
-        liveBadge.setClickable(true);
-        liveBadge.setContentDescription("Jump to live");
-        liveBadge.setOnClickListener(new View.OnClickListener() {
+        // Live cluster (mirrors the site header): bouncing equalizer bars while
+        // playing + a badge with a pulsing dot. Tapping the badge jumps to live.
+        LinearLayout liveRow = new LinearLayout(this);
+        liveRow.setOrientation(LinearLayout.HORIZONTAL);
+        liveRow.setGravity(Gravity.CENTER_VERTICAL);
+        audioBars = new AudioBars();
+        LinearLayout.LayoutParams barsLp = new LinearLayout.LayoutParams(dp(22), dp(16));
+        barsLp.setMargins(0, 0, dp(6), 0);
+        liveRow.addView(audioBars, barsLp);
+        liveBadgeBox = new LinearLayout(this);
+        liveBadgeBox.setOrientation(LinearLayout.HORIZONTAL);
+        liveBadgeBox.setGravity(Gravity.CENTER_VERTICAL);
+        liveBadgeBox.setPadding(dp(9), dp(6), dp(9), dp(6));
+        liveBadgeBox.setBackground(rect(cardBg, dp(20), dp(1), line));
+        liveBadgeBox.setFocusable(true);
+        liveBadgeBox.setClickable(true);
+        liveBadgeBox.setContentDescription("Jump to live");
+        liveBadgeBox.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) { snapToLive(); }
         });
-        updateLiveBadge();
-        titleRow.addView(liveBadge, new LinearLayout.LayoutParams(
+        liveDot = new PulseDot();
+        liveBadgeBox.addView(liveDot, new LinearLayout.LayoutParams(dp(9), dp(9)));
+        liveBadge = text("LIVE RADIO", sp(10), muted_, Typeface.BOLD);
+        LinearLayout.LayoutParams badgeTextLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        badgeTextLp.setMargins(dp(6), 0, 0, 0);
+        liveBadgeBox.addView(liveBadge, badgeTextLp);
+        liveRow.addView(liveBadgeBox, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, dp(32)));
+        updateLiveBadge();
+        titleRow.addView(liveRow, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         shell.addView(titleRow, lp(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0, 0, dp(14)));
 
@@ -1156,12 +1190,103 @@ public class MainActivity extends Activity {
     private void updateLiveBadge() {
         if (liveBadge == null) return;
         boolean active = player != null && player.isPlaying();
-        android.text.SpannableString label = new android.text.SpannableString("●  LIVE RADIO");
-        label.setSpan(new android.text.style.ForegroundColorSpan(active ? 0xFF168653 : 0xFFE54555),
-                0, 1, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        liveBadge.setText(label);
+        liveBadge.setText("LIVE RADIO");
         liveBadge.setTextColor(muted_);
-        liveBadge.setBackground(rect(cardBg, dp(20), dp(1), line));
+        liveBadgeBox.setBackground(rect(cardBg, dp(20), dp(1), line));
+        if (liveDot != null) liveDot.setColor(active ? 0xFF168653 : 0xFFE54555);
+        if (audioBars != null) audioBars.setActive(active);
+    }
+
+    /** The site's pulsing LIVE dot: 1.4s loop, shrinking to 65% and fading to 45%. */
+    private class PulseDot extends View {
+        private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private android.animation.ValueAnimator pulse;
+        private float fraction;
+        PulseDot() {
+            super(MainActivity.this);
+            paint.setColor(0xFFE54555);
+        }
+        void setColor(int color) { paint.setColor(color); invalidate(); }
+        void pause() { if (pulse != null) pulse.pause(); }
+        void resume() { if (pulse != null) pulse.resume(); }
+        @Override protected void onAttachedToWindow() {
+            super.onAttachedToWindow();
+            if (pulse == null) {
+                pulse = android.animation.ValueAnimator.ofFloat(0f, 1f);
+                pulse.setDuration(700);
+                pulse.setRepeatCount(android.animation.ValueAnimator.INFINITE);
+                pulse.setRepeatMode(android.animation.ValueAnimator.REVERSE);
+                pulse.addUpdateListener(new android.animation.ValueAnimator.AnimatorUpdateListener() {
+                    @Override public void onAnimationUpdate(android.animation.ValueAnimator a) {
+                        fraction = (Float) a.getAnimatedValue();
+                        invalidate();
+                    }
+                });
+            }
+            pulse.start();
+        }
+        @Override protected void onDetachedFromWindow() {
+            if (pulse != null) pulse.cancel();
+            super.onDetachedFromWindow();
+        }
+        @Override protected void onDraw(Canvas c) {
+            float r = Math.min(getWidth(), getHeight()) / 2f * (1f - 0.35f * fraction);
+            paint.setAlpha(Math.round(255 * (1f - 0.55f * fraction)));
+            c.drawCircle(getWidth() / 2f, getHeight() / 2f, r, paint);
+        }
+    }
+
+    /** The site's equalizer bars: four bouncing bars, visible only while playing. */
+    private class AudioBars extends View {
+        private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private android.animation.ValueAnimator bounce;
+        private float fraction;
+        private boolean active;
+        AudioBars() {
+            super(MainActivity.this);
+            setVisibility(View.GONE);
+        }
+        void setActive(boolean on) {
+            active = on;
+            setVisibility(on ? View.VISIBLE : View.GONE);
+            if (on) {
+                if (bounce == null) {
+                    bounce = android.animation.ValueAnimator.ofFloat(0f, 1f);
+                    bounce.setDuration(800);
+                    bounce.setRepeatCount(android.animation.ValueAnimator.INFINITE);
+                    bounce.setRepeatMode(android.animation.ValueAnimator.RESTART);
+                    bounce.addUpdateListener(new android.animation.ValueAnimator.AnimatorUpdateListener() {
+                        @Override public void onAnimationUpdate(android.animation.ValueAnimator a) {
+                            fraction = (Float) a.getAnimatedValue();
+                            invalidate();
+                        }
+                    });
+                }
+                if (!bounce.isStarted() || bounce.isPaused()) bounce.start();
+            } else if (bounce != null) {
+                bounce.cancel();
+            }
+        }
+        void pause() { if (bounce != null && bounce.isRunning()) bounce.pause(); }
+        void resume() { if (active && bounce != null && bounce.isPaused()) bounce.resume(); }
+        private float wave(float phase) {
+            float t = (fraction + phase) % 1f;
+            return t < 0.5f ? t * 2f : 2f - t * 2f;   // triangle wave, like alternate
+        }
+        @Override protected void onDraw(Canvas c) {
+            paint.setColor(ink);
+            float[] phases = {0.1f, 0.3f, 0.2f, 0.4f};
+            int n = 4;
+            float gap = getWidth() / (n * 2f + n - 1);
+            float barW = gap * 2f;
+            float minH = dp(4), maxH = getHeight();
+            for (int i = 0; i < n; i++) {
+                float h = minH + (maxH - minH) * wave(phases[i]);
+                float left = i * (barW + gap);
+                c.drawRoundRect(left, getHeight() - h, left + barW, getHeight(),
+                        dp(2), dp(2), paint);
+            }
+        }
     }
 
     private void showBadge(final Station s) {
