@@ -1252,7 +1252,7 @@ public class MainActivity extends Activity {
             if (on) {
                 if (bounce == null) {
                     bounce = android.animation.ValueAnimator.ofFloat(0f, 1f);
-                    bounce.setDuration(800);
+                    bounce.setDuration(1600);   // the site's 0.8s is each way: full up-down is 1.6s
                     bounce.setRepeatCount(android.animation.ValueAnimator.INFINITE);
                     bounce.setRepeatMode(android.animation.ValueAnimator.RESTART);
                     bounce.addUpdateListener(new android.animation.ValueAnimator.AnimatorUpdateListener() {
@@ -1271,7 +1271,7 @@ public class MainActivity extends Activity {
         void resume() { if (active && bounce != null && bounce.isPaused()) bounce.resume(); }
         private float wave(float phase) {
             float t = (fraction + phase) % 1f;
-            return t < 0.5f ? t * 2f : 2f - t * 2f;   // triangle wave, like alternate
+            return (1f - (float) Math.cos(t * 2f * Math.PI)) / 2f;   // smooth up-down, like the site's ease
         }
         @Override protected void onDraw(Canvas c) {
             paint.setColor(ink);
