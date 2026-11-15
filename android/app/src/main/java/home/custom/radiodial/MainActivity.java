@@ -306,6 +306,9 @@ public class MainActivity extends Activity {
             case KeyEvent.KEYCODE_M:
                 toggleMute();
                 return true;
+            case KeyEvent.KEYCODE_BACK:
+                if (grid != null && !grid.hasFocus() && !compact) { grid.requestFocus(); return true; }
+                return super.onKeyDown(keyCode, event);
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
                 togglePlay();
                 return true;
@@ -384,7 +387,7 @@ public class MainActivity extends Activity {
     /** Ink-outlined block: blue ring when focused, selFill when selected. */
     private StateListDrawable bordered(int fill, int selFill, int radiusPx) {
         StateListDrawable s = new StateListDrawable();
-        s.addState(new int[]{android.R.attr.state_focused}, rect(fill, radiusPx, px(4), FOCUS));
+        s.addState(new int[]{android.R.attr.state_focused}, rect(fill, radiusPx, px(6), FOCUS));
         s.addState(new int[]{android.R.attr.state_selected}, rect(selFill, radiusPx, px(3), ink));
         s.addState(new int[]{}, rect(fill, radiusPx, px(3), ink));
         return s;
@@ -810,8 +813,8 @@ public class MainActivity extends Activity {
         tip.setOrientation(LinearLayout.VERTICAL);
         tip.setPadding(px(22), px(20), px(22), px(20));
         tip.setBackground(rect(yellow, px(20), px(2), ink));
-        tip.addView(text("One click, no website maze.", px(22), INK_FIXED, Typeface.BOLD));
-        tip.addView(text("Direct public streams, played straight on your TV.", px(20),
+        tip.addView(text("One click, no website maze.", px(24), INK_FIXED, Typeface.BOLD));
+        tip.addView(text("Direct public streams, played straight on your TV.", px(24),
                 INK_FIXED, Typeface.NORMAL), lp(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 0, px(6), 0, 0));
         aside.addView(tip, lp(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -819,7 +822,7 @@ public class MainActivity extends Activity {
 
         View fill = new View(this);
         aside.addView(fill, new LinearLayout.LayoutParams(1, 0, 1f));
-        aside.addView(block("\u25D0 Toggle Theme", px(22), ink, cardBg, cardBg, px(18), px(10),
+        aside.addView(block("\u25D0 Toggle Theme", px(24), ink, cardBg, cardBg, px(18), px(10),
                 new View.OnClickListener() {
                     @Override public void onClick(View v) { toggleTheme(); }
                 }), lp(ViewGroup.LayoutParams.MATCH_PARENT, px(60), 0, 0, 0, 0));
@@ -834,11 +837,11 @@ public class MainActivity extends Activity {
         LinearLayout titles = new LinearLayout(this);
         titles.setOrientation(LinearLayout.VERTICAL);
         titles.addView(text("Pick a frequency.", px(56), ink, Typeface.BOLD));
-        statusText = text(status, px(22), muted_, Typeface.NORMAL);
+        statusText = text(status, px(24), muted_, Typeface.NORMAL);
         titles.addView(statusText, lp(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 0, px(10), 0, 0));
         topline.addView(titles, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-        TextView live = text("\u25CF LIVE RADIO", px(20), ink, Typeface.BOLD);
+        TextView live = text("\u25CF LIVE RADIO", px(24), ink, Typeface.BOLD);
         live.setGravity(Gravity.CENTER);
         live.setPadding(px(20), px(10), px(20), px(10));
         live.setBackground(rect(cardBg, px(40), px(2), ink));
@@ -880,7 +883,7 @@ public class MainActivity extends Activity {
 
         LinearLayout info = new LinearLayout(this);
         info.setOrientation(LinearLayout.VERTICAL);
-        TextView eyebrow = text("NOW TUNED TO", px(18), INK_FIXED, Typeface.BOLD);
+        TextView eyebrow = text("NOW TUNED TO", px(24), INK_FIXED, Typeface.BOLD);
         eyebrow.setLetterSpacing(0.12f);
         info.addView(eyebrow);
         cardName = text("", px(46), INK_FIXED, Typeface.BOLD);
@@ -888,7 +891,7 @@ public class MainActivity extends Activity {
         cardName.setEllipsize(android.text.TextUtils.TruncateAt.END);
         info.addView(cardName, lp(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 0, px(4), 0, 0));
-        cardDesc = text("", px(22), INK_FIXED, Typeface.NORMAL);
+        cardDesc = text("", px(24), INK_FIXED, Typeface.NORMAL);
         cardDesc.setSingleLine(true);
         cardDesc.setEllipsize(android.text.TextUtils.TruncateAt.END);
         info.addView(cardDesc, lp(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -924,7 +927,7 @@ public class MainActivity extends Activity {
         sectionRow.setGravity(Gravity.CENTER_VERTICAL);
         sectionRow.addView(text("On the dial", px(32), ink, Typeface.BOLD));
         TextView hint = text("Up / Down  tune    OK  play or stop    T  theme",
-                px(20), muted_, Typeface.NORMAL);
+                px(24), muted_, Typeface.NORMAL);
         hint.setGravity(Gravity.RIGHT);
         sectionRow.addView(hint, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
         main.addView(sectionRow, lp(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -951,6 +954,8 @@ public class MainActivity extends Activity {
         grid.setVerticalScrollBarEnabled(false);
         grid.setClipToPadding(false);
         grid.setPadding(px(4), px(4), px(4), px(4));
+        grid.setSelector(rect(0x00000000, px(20), px(6), FOCUS));
+        grid.setDrawSelectorOnTop(true);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 Station s = (Station) adapter.getItem(pos);
@@ -973,7 +978,7 @@ public class MainActivity extends Activity {
         main.addView(errorText, lp(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 0, px(8), 0, 0));
         main.addView(text("Streams are supplied by their broadcasters. They may include broadcast advertising.",
-                px(18), muted_, Typeface.NORMAL), lp(ViewGroup.LayoutParams.WRAP_CONTENT,
+                px(24), muted_, Typeface.NORMAL), lp(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 0, px(6), 0, 0));
 
         View divider = new View(this);
@@ -986,7 +991,7 @@ public class MainActivity extends Activity {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         frame.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-        fp.setMargins(px(72), px(56), px(72), px(60));
+        fp.setMargins(px(96), px(56), px(96), px(60));
         root.addView(shadowed(frame, px(28), px(9)), fp);
 
         setContentView(root);
@@ -1427,11 +1432,11 @@ public class MainActivity extends Activity {
 
             LinearLayout col = new LinearLayout(MainActivity.this);
             col.setOrientation(LinearLayout.VERTICAL);
-            TextView name = text(s.name, compact ? sp(16) : px(28), isPlaying ? INK_FIXED : ink, Typeface.BOLD);
+            TextView name = text(s.name, compact ? sp(16) : px(30), isPlaying ? INK_FIXED : ink, Typeface.BOLD);
             name.setSingleLine(true);
             name.setEllipsize(android.text.TextUtils.TruncateAt.END);
             col.addView(name);
-            TextView desc = text(s.description, compact ? sp(12) : px(19), isPlaying ? INK_FIXED : muted_, Typeface.NORMAL);
+            TextView desc = text(s.description, compact ? sp(12) : px(24), isPlaying ? INK_FIXED : muted_, Typeface.NORMAL);
             desc.setSingleLine(true);
             desc.setEllipsize(android.text.TextUtils.TruncateAt.END);
             col.addView(desc, lp(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -1505,11 +1510,15 @@ public class MainActivity extends Activity {
             c.setConnectTimeout(8000);
             c.setReadTimeout(10000);
             c.setRequestProperty("User-Agent", "RadioDial/1.0 (radio-dial.pages.dev)");
+            if (c.getResponseCode() / 100 != 2) return null;
             InputStream in = c.getInputStream();
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             byte[] buf = new byte[8192];
             int n;
-            while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+            while ((n = in.read(buf)) > 0) {
+                out.write(buf, 0, n);
+                if (out.size() > 16 * 1024 * 1024) return null; // station lists are a few MB at most
+            }
             return out.toByteArray();
         } catch (Exception e) {
             return null;

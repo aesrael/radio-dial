@@ -85,6 +85,20 @@ public final class PlaybackService extends MediaLibraryService {
         super.onCreate();
         loadStations();
         player = new ExoPlayer.Builder(this).build();
+        // Keep the CPU and Wi-Fi awake while streaming with the screen off (WAKE_LOCK is already declared).
+        player.setWakeMode(C.WAKE_MODE_NETWORK);
+        // Live streams drop on network changes: retry with backoff instead of staying silently stopped.
+        player.addListener(new Player.Listener() {
+            private int attempts;
+            @Override public void onPlayerError(androidx.media3.common.PlaybackException error) {
+                if (player == null || attempts >= 6) return;
+                long delay = Math.min(15000L, 1000L << attempts++);
+                new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+                    if (player != null && player.getPlayerError() != null) { player.prepare(); player.play(); }
+                }, delay);
+            }
+            @Override public void onPlaybackStateChanged(int state) { if (state == Player.STATE_READY) attempts = 0; }
+        });
         // Radio categories are continuous dials: keep both car skip controls available at either end.
         player.setRepeatMode(Player.REPEAT_MODE_ALL);
         player.setAudioAttributes(new AudioAttributes.Builder()
@@ -122,6 +136,13 @@ public final class PlaybackService extends MediaLibraryService {
             }
         }
         return result;
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        // Swiped away while paused: don't leave an idle service behind.
+        if (player != null && !player.getPlayWhenReady()) stopSelf();
+        super.onTaskRemoved(rootIntent);
     }
 
     @Override
